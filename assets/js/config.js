@@ -52,8 +52,9 @@ window.ME_CONFIG = {
   // ex.: "25/11/2026"
   arrecadadoAtualizadoEm: null,
 
-  // Nomes da lista de apoiadores, do jeito que cada pessoa pediu.
-  // Só inclua quem autorizou aparecer.
+  // Nomes da lista de apoiadores: nome e sobrenome ou primeiro nome com a
+  // inicial do sobrenome. Só inclua quem autorizou aparecer. Não publique
+  // apelidos, frases, nomes de empresas, links nem nada ofensivo.
   // ex.: ["Ana Souza", "Bia", "Carlos M."]
   listaApoiadores: [],
 

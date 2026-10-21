@@ -81,7 +81,7 @@
 
           <div class="cta-group">
             <a class="btn btn-primary btn-lg" href="#pix" data-cta="primary">Apoiar com Pix</a>
-            <a class="btn btn-ghost" href="#recompensas" data-cta-secondary>Ver recompensas</a>
+            <a class="btn btn-ghost" href="#experimente" data-cta-secondary>Experimente o jogo</a>
           </div>
           <p class="state-note" data-state-note>A partir de R$ 500, uma cópia do jogo é sua.</p>
 
@@ -320,12 +320,6 @@
         <p class="kicker">Como apoiar</p>
         <h2 id="apoiar-title">Financiamento coletivo, direto e sem mistério.</h2>
         <p class="section-lead">Em vez de comprar um jogo pronto, você ajuda a fazê-lo existir. Os apoios pagam a produção da primeira tiragem e, em troca, cada pessoa recebe a recompensa do valor que escolheu.</p>
-        <ol class="support-steps">
-          <li><span class="ss-n" aria-hidden="true">1</span><h3>Escolha um valor</h3><p>Qualquer valor coloca seu nome na lista de apoiadores. A partir de <span data-pix-offer-value>R$ 500</span>, você também garante uma cópia do jogo.</p></li>
-          <li><span class="ss-n" aria-hidden="true">2</span><h3>Pague por Pix</h3><p>Use o Pix copia e cola, o QR Code ou a chave. O dinheiro vai direto para o criador.</p></li>
-          <li><span class="ss-n" aria-hidden="true">3</span><h3>Envie o comprovante</h3><p>Mande o comprovante pelo WhatsApp e diga como quer aparecer na lista. Se apoiou com <span data-pix-offer-value>R$ 500</span> ou mais, informe também o endereço de entrega.</p></li>
-        </ol>
-
         <div class="campaign-panel" data-campaign-panel>
           <div class="cp-row">
             <p class="cp-label">Meta</p>
@@ -351,75 +345,53 @@
 
         <div class="pix-box" id="pix" data-config="pixChave" data-pix hidden>
           <p class="pix-tag">Apoie com Pix</p>
-          <h3>Escolha um valor e apoie agora</h3>
-          <p>Qualquer valor ajuda a levar o ME para a gráfica.</p>
-          <p class="pix-offer" data-config="pixValorCopia" data-pix-offer hidden><strong>A partir de <span data-pix-offer-value>R$ 500</span>, você garante uma cópia do ME.</strong> Com qualquer valor, seu nome entra na lista de apoiadores deste site.</p>
-          <p class="pix-goal" data-config="metaReais" data-pix-goal hidden>Meta da campanha: <strong data-pix-goal-value></strong> para produzir <span data-config="tiragem">50</span> cópias.</p>
-
-          <div class="pix-amounts" data-config="pixValores" data-pix-amounts hidden>
-            <p class="pix-label" id="pix-amounts-label">Escolha um valor</p>
-            <div class="pix-amount-grid" role="group" aria-labelledby="pix-amounts-label" data-pix-amount-grid></div>
-          </div>
-
-          <div class="pix-code" data-config="pixNome pixCidade" data-pix-code hidden>
-            <div class="pix-code-main">
-              <p class="pix-label" data-pix-code-label>Pix copia e cola</p>
-              <code data-pix-code-text></code>
-              <button type="button" class="btn btn-primary btn-sm" data-pix-code-copy>Copiar código Pix</button>
-              <p class="pix-hint">No app do seu banco, escolha <strong>Pix copia e cola</strong> e cole o código. O valor já vem preenchido.</p>
+          <h3>O que você recebe</h3>
+          <div class="pix-tiers">
+            <div class="pix-tier">
+              <p class="pix-tier-value">Qualquer valor</p>
+              <p>Seu nome na lista de apoiadores deste site.</p>
             </div>
-            <div class="pix-qr" data-pix-qr></div>
-          </div>
-          <p class="pix-suggest" role="status" data-pix-suggest hidden></p>
-          <div class="pix-copy-note" data-pix-copy-note hidden>
-            <p data-pix-note-text></p>
-            <p data-pix-whats></p>
+            <div class="pix-tier pix-tier-copy" data-config="pixValorCopia" data-pix-offer hidden>
+              <p class="pix-tier-value">A partir de <span data-pix-offer-value>R$ 500</span></p>
+              <p><strong>Uma cópia do ME</strong> e seu nome na lista. Frete à parte.</p>
+            </div>
           </div>
 
-          <div class="pix-key">
-            <p class="pix-label" id="pix-label" data-pix-key-label>Chave Pix</p>
-            <code data-pix-key aria-labelledby="pix-label"></code>
-            <button type="button" class="btn btn-primary btn-sm" data-pix-copy>Copiar chave</button>
-          </div>
-          <p class="pix-feedback" role="status" data-pix-feedback></p>
-          <ul class="pix-terms">
-            <li data-config="pixValorCopia" data-pix-term-copy hidden><strong>A partir de <span data-pix-offer-value>R$ 500</span>: uma cópia do ME e seu nome na lista de apoiadores.</strong> O frete é cobrado à parte e combinado depois.</li>
-            <li><strong>Qualquer valor<span data-pix-term-below hidden> abaixo disso</span>: seu nome na lista de apoiadores</strong> deste site, do jeito que você pedir (ou nenhum, se preferir).</li>
-            <li><strong>Depois do Pix, envie o comprovante pelo WhatsApp</strong> dizendo como quer aparecer na lista<span data-pix-term-address hidden> e, se for o caso, o endereço de entrega</span>. <span data-pix-whats></span></li>
-            <li><strong>O jogo será produzido mesmo que a meta não seja atingida</strong>, com o valor arrecadado. Por isso não há devolução por meta não atingida.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+          <ol class="pix-steps">
+            <li class="pix-step">
+              <h4><span class="pix-n" aria-hidden="true">1</span>Escolha um valor</h4>
+              <div class="pix-amounts" data-config="pixValores" data-pix-amounts hidden>
+                <div class="pix-amount-grid" role="group" aria-label="Valores sugeridos" data-pix-amount-grid></div>
+              </div>
+              <div class="pix-copy-note" role="status" data-pix-copy-note hidden><p data-pix-note-text></p></div>
+            </li>
+            <li class="pix-step">
+              <h4><span class="pix-n" aria-hidden="true">2</span>Pague pelo app do seu banco</h4>
+              <div class="pix-code" data-config="pixNome pixCidade" data-pix-code hidden>
+                <div class="pix-code-main">
+                  <p class="pix-label" data-pix-code-label>Pix copia e cola</p>
+                  <code data-pix-code-text></code>
+                  <button type="button" class="btn btn-primary btn-sm" data-pix-code-copy>Copiar código Pix</button>
+                  <p class="pix-hint">No app do banco, escolha <strong>Pix copia e cola</strong> e cole o código. O valor já vem preenchido.</p>
+                </div>
+                <div class="pix-qr" data-pix-qr></div>
+              </div>
+              <p class="pix-suggest" role="status" data-pix-suggest hidden></p>
+              <div class="pix-key">
+                <p class="pix-label" id="pix-label" data-pix-key-label>Chave Pix</p>
+                <code data-pix-key aria-labelledby="pix-label"></code>
+                <button type="button" class="btn btn-primary btn-sm" data-pix-copy>Copiar chave</button>
+              </div>
+              <p class="pix-feedback" role="status" data-pix-feedback></p>
+            </li>
+            <li class="pix-step">
+              <h4><span class="pix-n" aria-hidden="true">3</span>Envie o comprovante pelo WhatsApp</h4>
+              <p>Junto com seu nome e sobrenome para a lista (ex.: Ana S.)<span data-pix-term-address hidden> e, se apoiou com <span data-pix-offer-value>R$ 500</span> ou mais, o endereço de entrega</span>.</p>
+              <p class="pix-whats-line" data-pix-whats-main></p>
+            </li>
+          </ol>
 
-    <!-- 9. RECOMPENSAS -->
-    <section class="section rewards" id="recompensas" aria-labelledby="rewards-title">
-      <div class="wrap">
-        <p class="kicker">Recompensas</p>
-        <h2 id="rewards-title">Escolha como você quer entrar no jogo.</h2>
-        <p class="section-lead">São duas formas de apoiar, as duas por Pix.</p>
-        <div class="reward-grid">
-          <article class="reward">
-            <h3>Nome no site</h3>
-            <p class="reward-price">Qualquer valor</p>
-            <p class="reward-desc">Para quem quer ajudar o ME a existir.</p>
-            <ul>
-              <li>Seu nome (ou apelido) na lista de apoiadores deste site</li>
-            </ul>
-            <a class="btn btn-ghost" href="#pix" data-reward-pix>Apoiar com Pix</a>
-          </article>
-          <article class="reward reward-featured">
-            <span class="reward-badge">Garante o jogo</span>
-            <h3>Cópia do ME</h3>
-            <p class="reward-price">A partir de <span data-pix-offer-value>R$ 500</span></p>
-            <p class="reward-desc">Uma das <span data-config="tiragem">50</span> cópias da primeira tiragem.</p>
-            <ul>
-              <li>Uma cópia do jogo ME</li>
-              <li>Seu nome na lista de apoiadores deste site</li>
-              <li>Frete à parte, combinado depois pelo WhatsApp</li>
-            </ul>
-            <a class="btn btn-primary reward-cta" href="#pix" data-reward-pix data-pix-select="copia"><span>Apoiar com <span data-pix-offer-value>R$ 500</span></span></a>
-          </article>
+          <p class="pix-small">O jogo será produzido mesmo que a meta não seja atingida, com o valor arrecadado. Por isso não há devolução por meta não atingida. Os nomes passam por revisão antes de entrar na lista.</p>
         </div>
       </div>
     </section>
@@ -431,7 +403,7 @@
         <h2 id="backers-title">Quem já está nessa com a gente.</h2>
         <ul class="backer-list" data-config="listaApoiadores" data-backers hidden></ul>
         <p class="backers-empty" data-backers-empty>Ainda não há nomes por aqui. Apoie com qualquer valor e seja o primeiro nome desta lista.</p>
-        <p class="fineprint">Os nomes aparecem do jeito que cada pessoa pediu, depois que o Pix é confirmado. A lista é atualizada manualmente.</p>
+        <p class="fineprint">Aparecem nome e sobrenome ou primeiro nome com a inicial do sobrenome, depois que o Pix é confirmado. Todos os nomes são revisados antes de entrar na lista, que é atualizada manualmente.</p>
       </div>
     </section>
 
@@ -452,22 +424,43 @@
 
     <!-- 10. SOBRE O AUTOR -->
     <section class="section author" id="autor" aria-labelledby="autor-title">
-      <div class="wrap author-grid">
-        <div class="author-photo">
-          <!-- FOTO: troque o personagem por <img src="assets/img/tiberio.webp" alt="Foto de Tibério" width="400" height="400"> -->
-          <img src="assets/img/personagens/quadrado.svg" alt="" width="70" height="205" loading="lazy">
+      <div class="wrap">
+        <div class="author-grid">
+          <div class="author-photo">
+            <!-- FOTO: troque o personagem por <img src="assets/img/tiberio.webp" alt="Foto de Tibério" width="400" height="400"> -->
+            <img src="assets/img/personagens/quadrado.svg" alt="" width="70" height="205" loading="lazy">
+          </div>
+          <div>
+            <p class="kicker">Quem fez</p>
+            <h2 id="autor-title">Uma ideia de Tibério, com o traço de Gleice Vieira.</h2>
+            <!-- BIO: substitua o parágrafo abaixo pela sua bio. -->
+            <p>O ME foi criado por Tibério, desenvolvedor independente de Ribeirão Preto (SP). O jogo nasceu da curiosidade sobre as pessoas: aquela vontade de saber o que passa na cabeça de quem está do seu lado e de conhecer melhor até quem você acha que já conhece.</p>
+            <p class="author-contact" data-contact-line hidden>Quer falar comigo? <span data-contact-links></span></p>
+          </div>
         </div>
-        <div>
-          <p class="kicker">Quem fez</p>
-          <h2 id="autor-title">Feito por Tibério, em Ribeirão Preto.</h2>
-          <!-- BIO: substitua os parágrafos abaixo pela sua bio. -->
-          <p>O ME foi criado por Tibério, desenvolvedor independente de Ribeirão Preto (SP). O jogo nasceu da curiosidade sobre as pessoas: aquela vontade de saber o que passa na cabeça de quem está do seu lado e de conhecer melhor até quem você acha que já conhece.</p>
-          <p class="credit">O ME só foi possível graças ao trabalho profissional da designer gráfica <strong>Gleice Vieira</strong>.
-            <a class="ig-link" href="https://www.instagram.com/bivalve.br" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>@bivalve.br<span class="visually-hidden"> no Instagram (abre em nova aba)</span></a>
-          </p>
-          <p class="credit">E não poderiam ficar de fora os amigos que participaram das rodadas de playtest. Os palpites e sugestões deles, sempre com muitas risadas e críticas construtivas, ajudaram a tirar o projeto do papel.</p>
-          <p class="author-contact" data-contact-line hidden>Quer falar comigo? <span data-contact-links></span></p>
-        </div>
+
+        <aside class="designer reveal" aria-labelledby="designer-title">
+          <div class="designer-cast" aria-hidden="true">
+            <img src="assets/img/personagens/pentagono.svg" alt="" width="40" height="121" loading="lazy">
+            <img src="assets/img/personagens/hexagono.svg" alt="" width="40" height="120" loading="lazy">
+            <img src="assets/img/personagens/organico.svg" alt="" width="40" height="124" loading="lazy">
+          </div>
+          <div class="designer-body">
+            <p class="designer-tag">Design gráfico</p>
+            <h3 id="designer-title">Gleice Vieira</h3>
+            <p class="designer-lead">O ME só foi possível graças ao trabalho profissional da designer gráfica Gleice Vieira. Tudo o que você vê do jogo saiu do traço dela.</p>
+            <ul class="designer-list">
+              <li><strong>Logo e identidade visual:</strong> o “Me” em traço contínuo, a paleta de cores e a tipografia.</li>
+              <li><strong>Os 8 personagens</strong> de cabeça geométrica, que viraram os peões do jogo.</li>
+              <li><strong>O tabuleiro</strong> em forma do logo e <strong>a caixa</strong>.</li>
+              <li><strong>As 180 cartas</strong> e os <strong>ícones</strong> das 6 categorias.</li>
+            </ul>
+            <p>Foi ela quem transformou uma ideia de mesa de amigos em um jogo com cara, cor e personalidade.</p>
+            <a class="btn btn-ig" href="https://www.instagram.com/bivalve.br" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg><span>Conheça o trabalho da Gleice · @bivalve.br</span><span class="visually-hidden"> no Instagram (abre em nova aba)</span></a>
+          </div>
+        </aside>
+
+        <p class="thanks">E não poderiam ficar de fora os amigos que participaram das rodadas de playtest. Os palpites e sugestões deles, sempre com muitas risadas e críticas construtivas, ajudaram a tirar o projeto do papel.</p>
       </div>
     </section>
 
@@ -483,11 +476,11 @@
           </details>
           <details>
             <summary>Como faço para apoiar?</summary>
-            <div><p>Escolha um valor na seção <a href="#pix">Apoie com Pix</a>, pague pelo Pix copia e cola, pelo QR Code ou pela chave, e envie o comprovante pelo WhatsApp dizendo como quer aparecer na lista de apoiadores. Se apoiou com <span data-pix-offer-value>R$ 500</span> ou mais, informe também o endereço de entrega.</p></div>
+            <div><p>Escolha um valor na seção <a href="#pix">Apoie com Pix</a>, pague pelo Pix copia e cola, pelo QR Code ou pela chave, e envie o comprovante pelo WhatsApp com seu nome e sobrenome para a lista de apoiadores. Se apoiou com <span data-pix-offer-value>R$ 500</span> ou mais, informe também o endereço de entrega.</p></div>
           </details>
           <details>
             <summary>O que eu recebo?</summary>
-            <div><p>Com qualquer valor, seu nome (ou apelido) entra na lista de apoiadores deste site. A partir de <span data-pix-offer-value>R$ 500</span>, você também garante uma cópia do jogo, com frete à parte.</p></div>
+            <div><p>Com qualquer valor, seu nome entra na lista de apoiadores deste site. A partir de <span data-pix-offer-value>R$ 500</span>, você também garante uma cópia do jogo, com frete à parte.</p></div>
           </details>
           <details>
             <summary>E se a meta não for atingida?</summary>
@@ -499,7 +492,7 @@
           </details>
           <details>
             <summary>Como meu nome aparece na lista?</summary>
-            <div><p>Do jeito que você pedir na mensagem do WhatsApp: nome, apelido ou nenhum, se preferir não aparecer.</p></div>
+            <div><p>Publicamos nome e sobrenome ou primeiro nome com a inicial do sobrenome (ex.: Ana S.), como você indicar na mensagem do WhatsApp. Se preferir, você pode não aparecer. Apelidos, frases, nomes de empresas, links e qualquer conteúdo ofensivo não são publicados, e todos os nomes passam por revisão antes de entrar na lista.</p></div>
           </details>
           <details>
             <summary>Quando recebo o jogo?</summary>
@@ -530,7 +523,7 @@
         <p data-final-text>Uma tiragem de <span data-config="tiragem">50</span> cópias. Com <span data-pix-offer-value>R$ 500</span>, a sua está garantida.</p>
         <div class="cta-group center">
           <a class="btn btn-primary btn-lg" href="#pix" data-cta="primary">Apoiar com Pix</a>
-          <a class="btn btn-ghost on-dark" href="#recompensas" data-cta-secondary>Ver recompensas</a>
+          <a class="btn btn-ghost on-dark" href="#experimente" data-cta-secondary>Experimente o jogo</a>
         </div>
         <div class="cast cast-final" aria-hidden="true">
           <img src="assets/img/personagens/triangulo.svg" alt="" width="42" height="122" loading="lazy">

@@ -96,14 +96,14 @@ Os apoios são feitos por Pix, direto para você, e o site muda sozinho de estad
 
 | Estado | Quando | O que o visitante vê |
 |---|---|---|
-| **Campanha ativa** (atual) | antes de `dataFim` | Botões "Apoiar com Pix", contagem até o fim, barra de meta, recompensas e o card do Pix. |
+| **Campanha ativa** (atual) | antes de `dataFim` | Botões "Apoiar com Pix", contagem até o fim, barra de meta e o card do Pix (o que a pessoa recebe e os 3 passos para apoiar). |
 | **Encerrada** | depois de `dataFim` | Agradecimento, botão "Ver quem apoiou", resultado final da barra. O Pix some do site. |
 
 ### Regras que o site comunica
 
-- **Qualquer valor:** o nome da pessoa (ou apelido) entra na lista de apoiadores do site, do jeito que ela pedir, ou nenhum, se preferir.
+- **Qualquer valor:** o nome da pessoa entra na lista de apoiadores do site, como nome e sobrenome ou primeiro nome com a inicial do sobrenome (ex.: "Ana S."), ou ela pode não aparecer. Apelidos, frases, nomes de empresas, links e conteúdo ofensivo não são publicados; revise cada nome antes de incluir.
 - **A partir de `pixValorCopia` (hoje R$ 500):** uma cópia do jogo e o nome na lista. O frete é cobrado à parte e combinado pelo WhatsApp.
-- **Depois do Pix:** a pessoa envia o comprovante pelo WhatsApp (campo `whatsapp`), dizendo como quer aparecer e, se for o caso, o endereço de entrega. O botão do site abre a conversa com a mensagem pronta.
+- **Depois do Pix:** a pessoa envia o comprovante pelo WhatsApp (campo `whatsapp`), com nome e sobrenome para a lista e, se for o caso, o endereço de entrega. O botão do site abre a conversa com a mensagem pronta.
 - **Se a meta não for atingida:** o jogo é produzido mesmo assim, com o valor arrecadado, e não há devolução por meta não atingida.
 
 Esses são compromissos seus com quem apoia: guarde o registro de cada Pix, do nome pedido e do endereço de quem tem direito à cópia.

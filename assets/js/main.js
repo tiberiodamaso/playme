@@ -64,7 +64,7 @@
     }
     return {
       primary: hasPix ? { text: "Apoiar com Pix", href: "#pix" } : { text: "Como apoiar", href: "#como-apoiar" },
-      secondary: { text: "Ver recompensas", href: "#recompensas" },
+      secondary: { text: "Experimente o jogo", href: "#experimente" },
       note: copyMin ? "A partir de " + brl(copyMin) + ", uma cópia do jogo é sua." : "Qualquer valor ajuda a levar o ME para a gráfica."
     };
   }
@@ -213,7 +213,7 @@
     if (whatsDigits) {
       var withCopy = copyMin && (!amount || amount >= copyMin);
       var msg = "Olá! Fiz um Pix" + (amount ? " de " + brl(amount) : "") + " para apoiar o ME. Segue o comprovante.\n" +
-        "Quero aparecer na lista de apoiadores como: \n" +
+        "Nome e sobrenome para a lista de apoiadores (ou \"não quero aparecer\"): \n" +
         (withCopy ? "Endereço para envio da cópia" + (amount ? "" : " (se apoiei com " + brl(copyMin) + " ou mais)") + ": " : "");
       var a = el("a", { "class": "btn btn-primary btn-sm pix-whats", href: "https://wa.me/" + whatsDigits + "?text=" + encodeURIComponent(msg), target: "_blank", rel: "noopener" }, "Enviar comprovante pelo WhatsApp");
       a.appendChild(el("span", { "class": "visually-hidden" }, " (abre em nova aba)"));
@@ -235,14 +235,11 @@
         $$(s, box).forEach(function (e) { e.hidden = false; });
       });
     }
-    fillWhats($(".pix-terms [data-pix-whats]", box), null);
+    var whatsMain = $("[data-pix-whats-main]", box);
+    fillWhats(whatsMain, null);
 
     var fb = $("[data-pix-feedback]", box);
 
-    if (isNum(c.metaReais)) {
-      $("[data-pix-goal-value]", box).textContent = brl(c.metaReais);
-      $("[data-pix-goal]", box).hidden = false;
-    }
 
     var keyBtn = $("[data-pix-copy]", box);
     keyBtn.addEventListener("click", function () {
@@ -275,10 +272,10 @@
         $$(".pix-amount", grid).forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
         fb.textContent = "";
         $("[data-pix-note-text]", note).replaceChildren(
-          el("strong", null, withCopy ? "Este valor garante uma cópia do ME e seu nome na lista de apoiadores." : "Este valor coloca seu nome na lista de apoiadores deste site."),
-          document.createTextNode(withCopy ? " O frete é cobrado à parte e combinado depois." : " Depois do Pix, envie o comprovante dizendo como quer aparecer."));
-        fillWhats($("[data-pix-whats]", note), v);
+          el("strong", null, brl(v) + ": "),
+          document.createTextNode(withCopy ? "uma cópia do ME e seu nome na lista de apoiadores. Frete à parte." : "seu nome na lista de apoiadores deste site."));
         note.hidden = false;
+        fillWhats(whatsMain, v);
         if (canCode) {
           current = pixPayload(key, v, name, city);
           codeText.textContent = current;
