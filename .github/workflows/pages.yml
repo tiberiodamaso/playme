@@ -1,0 +1,47 @@
+# Publica SOMENTE a pasta /site no GitHub Pages.
+# Nada fora de /site (README, .github, e principalmente docs/) vai ao ar.
+name: Publicar site no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bloquear publicação de material confidencial
+        run: |
+          if git ls-files | grep -q '^docs/'; then
+            echo "::error::Há arquivos de docs/ versionados. Remova-os antes de publicar."
+            exit 1
+          fi
+          if grep -rIl 'docs/' site/ ; then
+            echo "::error::O site contém referências a docs/."
+            exit 1
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
