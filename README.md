@@ -1,6 +1,6 @@
 # ME · site da campanha
 
-Site estático (HTML, CSS e JavaScript puros, sem build) que apresenta o jogo de tabuleiro **ME** e leva visitantes à campanha de financiamento coletivo na MeepleStarter.
+Site estático (HTML, CSS e JavaScript puros, sem build) que apresenta o jogo de tabuleiro **ME** e recebe os apoios da campanha de financiamento coletivo por Pix.
 
 Endereço: **https://playme.app.br**
 
@@ -10,7 +10,7 @@ site/                    ← tudo que vai ao ar (e só isso)
   404.html
   CNAME  robots.txt  sitemap.xml
   assets/js/config.js    ← ÚNICO arquivo a editar para atualizar a campanha
-  assets/js/main.js      lógica dos estados, demo e recompensas
+  assets/js/main.js      lógica dos estados, barra de meta, Pix e demo
   assets/css/style.css
   assets/img/            personagens, caixa, peões, tabuleiro, og-me.png, favicon
   assets/fonts/          Montserrat (hospedada aqui, sem Google Fonts)
@@ -81,56 +81,56 @@ Documentação: [Verificar seu domínio personalizado para o GitHub Pages](https
 
 ---
 
-## Quando a campanha for definida (checklist)
+## A campanha (por Pix, direto com o criador)
 
-Todos os dados ficam em **`site/assets/js/config.js`**. Campo desconhecido continua `null`, e o site esconde o que é `null`. Valores em reais são números sem "R$" e sem ponto (`15000`). Datas usam o formato `"2027-03-01T10:00:00-03:00"` (horário de Brasília).
+Todos os dados ficam em **`site/assets/js/config.js`**. Campo desconhecido continua `null`, e o site esconde o que é `null`. Valores em reais são números sem "R$" e sem ponto (`25000`). Datas usam o formato `"2026-12-10T21:00:00-03:00"` (horário de Brasília).
 
-O site calcula o estado sozinho, pela data e hora de quem visita:
+A campanha não usa plataforma: os apoios são feitos por Pix, direto para você, e o site muda sozinho de estado pela data e hora de quem visita:
 
 | Estado | Quando | O que o visitante vê |
 |---|---|---|
-| **Em breve** (atual) | `dataInicio` é `null` | Botão "Em breve na MeepleStarter", que rola até "Como apoiar". Com `instagram` preenchido, aparece também "Siga para ser avisado(a) do lançamento". Sem contagem, sem valores, recompensas em modo "em breve". |
-| **Lançamento agendado** | `dataInicio` no futuro | Contagem regressiva até o início e botão "Ver a campanha na MeepleStarter" apontando para `campanhaUrl`. |
-| **Campanha ativa** | entre `dataInicio` e `dataFim` | Botão "Apoiar agora", contagem até o fim, barra de progresso, número de apoiadores e botões nas recompensas. |
-| **Encerrada** | depois de `dataFim` | Agradecimento, link para a campanha e resultado final. |
+| **Campanha ativa** (atual) | antes de `dataFim` | Botões "Apoiar com Pix", contagem até o fim, barra de meta, recompensas e o card do Pix. |
+| **Encerrada** | depois de `dataFim` | Agradecimento, botão "Ver quem apoiou", resultado final da barra. O Pix some do site. |
 
-Ordem sugerida:
+### Regras que o site comunica
 
-1. **Contato e redes** (pode ser já): `instagram`, `whatsapp`, `email`. Os links aparecem no rodapé e em "Quem fez". No estado "Em breve", o Instagram vira a ação "Siga para ser avisado(a)".
-2. **Página da campanha criada na MeepleStarter**: `campanhaUrl`.
-3. **Recompensas definidas**: `recompensas` (os cards são gerados sozinhos; marque `destaque: true` em um só nível) e `metaReais` (o painel passa a mostrar "R$ X para produzir 50 cópias").
-4. **Prazo de entrega definido**: `previsaoEntrega` (aparece no FAQ "Quando recebo o jogo?").
-5. **Data de lançamento marcada**: `dataInicio` e `dataFim`. O site passa para **Lançamento agendado** e, na hora marcada, para **Campanha ativa** sozinho, sem novo deploy.
-6. **Durante a campanha**: atualize `arrecadadoReais` e `apoiadores` (veja abaixo).
-7. **Depois do fim**: o site passa para **Encerrada** sozinho. Faça uma última atualização de `arrecadadoReais` e `apoiadores` com os números finais.
+- **Qualquer valor:** o nome da pessoa (ou apelido) entra na lista de apoiadores do site, do jeito que ela pedir, ou nenhum, se preferir.
+- **A partir de `pixValorCopia` (hoje R$ 500):** uma cópia do jogo e o nome na lista. O frete é cobrado à parte e combinado pelo WhatsApp.
+- **Depois do Pix:** a pessoa envia o comprovante pelo WhatsApp (campo `whatsapp`), dizendo como quer aparecer e, se for o caso, o endereço de entrega. O botão do site abre a conversa com a mensagem pronta.
+- **Se a meta não for atingida:** o jogo é produzido mesmo assim, com o valor arrecadado, e não há devolução por meta não atingida.
 
-Para testar antes de publicar, rode o site localmente com `python3 -m http.server` e abra no navegador.
+Esses são compromissos seus com quem apoia: guarde o registro de cada Pix, do nome pedido e do endereço de quem tem direito à cópia.
 
-### Atualizar `arrecadadoReais` e `apoiadores` durante a campanha
+### Campos do Pix
 
-1. Copie os números da página da campanha na MeepleStarter.
-2. Edite `site/assets/js/config.js`, por exemplo:
-   ```js
-   arrecadadoReais: 8350,
-   apoiadores: 37,
-   ```
-3. Faça commit e push em `main`. O Actions publica em cerca de 1 minuto. Pelo próprio GitHub dá para editar no navegador: abra o arquivo, clique no lápis e depois em "Commit changes".
+- `pixChave`: chave que recebe os apoios. Com `null`, o Pix some do site.
+- `pixValores`: valores sugeridos em botões (ex.: `[50, 100, 150, 200, 250, 500]`). Use `[]` para mostrar só a chave.
+- `pixValorCopia`: valor mínimo que garante uma cópia do jogo.
+- `pixNome` e `pixCidade`: **seu** nome e **sua** cidade (do recebedor), exigidos pelo padrão do Pix (BR Code). Com os dois preenchidos, cada botão gera um **Pix copia e cola** já com o valor e, em telas a partir de 720 px, um QR Code. Com algum deles `null`, o botão só sugere o valor e a pessoa digita a quantia no app do banco. Depois de preencher, faça um Pix de teste de valor baixo pelo app do banco.
 
-A barra de progresso só aparece com campanha ativa ou encerrada e com `metaReais` e `arrecadadoReais` preenchidos e maiores que zero. Os números não se atualizam sozinhos: o site mostra exatamente o que estiver no `config.js`.
+O QR Code é gerado no próprio navegador pela biblioteca `assets/js/vendor/qrcode.js` (qrcode-generator, licença MIT), carregada só quando alguém escolhe um valor.
 
----
+### Atualizar a barra de meta e a lista de apoiadores
 
-### Contribuição direta por Pix
+Um site estático não tem como saber quando um Pix chega. A barra e a lista mudam quando você atualiza o `config.js`:
 
-O campo `pixChave` do `config.js` mostra, em "Como apoiar" e no FAQ, a opção de contribuir por Pix direto ao criador. Com `null`, a opção some do site. A opção aparece em todos os estados da campanha, e o site informa que:
+```js
+arrecadadoReais: 8350,              // total confirmado, em reais
+apoiadores: 37,                     // número de apoiadores
+arrecadadoAtualizadoEm: "25/11/2026",
+listaApoiadores: ["Ana Souza", "Bia", "Carlos M."],   // só quem autorizou
+```
 
-- é uma contribuição voluntária, sem recompensa nem cópia do jogo;
-- não conta para a meta na MeepleStarter;
-- é devolvida integralmente para a conta de origem se a meta não for atingida.
+Depois, commit e push em `main`. O Actions publica em cerca de 1 minuto. Pelo próprio GitHub dá para editar no navegador: abra o arquivo, clique no lápis e depois em "Commit changes".
 
-Esse último item é um compromisso seu com quem contribuir: guarde o registro dos Pix recebidos para conseguir devolver.
+Enquanto `arrecadadoReais` for `null`, a barra aparece vazia com "Meta: R$ 25.000 para produzir 50 cópias. Seja a primeira pessoa a apoiar!". Acima de 100%, a barra fica cheia e o percentual real aparece no texto.
 
-**Não coloque a chave Pix na página da campanha na MeepleStarter.** Os Termos de Uso Gerais da plataforma (seção 5) proíbem publicar lá dados de conta bancária e "links para pagamentos externos". No seu próprio site isso é permitido.
+### Outros campos
+
+- `dataFim`: fim da campanha (hoje 10/12/2026, 21h).
+- `metaReais`: meta (hoje R$ 25.000).
+- `previsaoEntrega`: aparece no FAQ "Quando recebo o jogo?".
+- `whatsapp`, `instagram`, `email`: os links aparecem no rodapé e em "Quem fez".
 
 ## Outros pontos editáveis no HTML
 
@@ -150,4 +150,4 @@ O site não usa cookies, analytics nem recursos de terceiros: as fontes estão h
 
 - `docs/` está no `.gitignore` e nunca deve ser versionado nem publicado.
 - O site mostra só **8 perguntas de exemplo** (4 na demo e 4 nos cards de categoria), nenhuma da categoria Intimidade. Não acrescente outras.
-- Não use nome, logo ou marca de empresas do Grupo Ludens (LudensLab, Ludens Spirit, Ludeka). A MeepleStarter pode ser citada e linkada como plataforma da campanha.
+- Não use nome, logo ou marca de empresas do Grupo Ludens (LudensLab, Ludens Spirit, Ludeka).

@@ -47,9 +47,13 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
+  font-size: 106.25%; /* 17px: um pouco maior para facilitar a leitura */
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 12px);
   -webkit-text-size-adjust: 100%;
+}
+@media (min-width: 960px) {
+  html { font-size: 112.5%; } /* 18px em telas grandes */
 }
 
 body {
@@ -242,6 +246,7 @@ a:hover { text-decoration-thickness: 2px; }
 .progress-text { margin: 8px 0 0; }
 .progress-pct { font-weight: 800; }
 .progress-backers { margin: 2px 0 0; color: var(--text-muted); font-size: .95rem; }
+.progress-updated { margin: 4px 0 0; color: var(--text-muted); font-size: .82rem; }
 
 /* ---------- A cena ---------- */
 .scene { background: var(--ink); color: var(--text-on-dark); }
@@ -455,6 +460,58 @@ a:hover { text-decoration-thickness: 2px; }
 .pix-key .btn { justify-self: start; background: var(--ink); color: var(--white); border-color: var(--ink); box-shadow: none; }
 .pix-key .btn:hover { background: #000; }
 .pix-feedback { min-height: 1.4em; margin: 10px 0 4px; font-size: .92rem; font-weight: 700; color: var(--ink); }
+.pix-goal { margin: -4px 0 18px; font-size: 1.02rem; }
+.pix-amounts { margin-bottom: 16px; }
+.pix-amounts .pix-label { margin-bottom: 8px; }
+.pix-amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 520px; }
+.pix-amount {
+  min-height: 48px; padding: 8px 10px;
+  background: var(--white); color: var(--ink);
+  border: 2px solid var(--ink); border-radius: var(--radius-sm);
+  font: inherit; font-weight: 800; font-size: 1.05rem; cursor: pointer;
+  transition: transform .15s ease, background-color .15s ease;
+}
+.pix-amount:hover { transform: translateY(-1px); background: #FFF3CC; }
+.pix-amount[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+.pix-amount small { display: block; font-size: .72rem; font-weight: 700; line-height: 1.2; }
+.pix-amount-copy { background: var(--yellow); }
+.pix-amount-copy:hover { background: #FFCD45; }
+.pix-offer {
+  background: var(--yellow); border: 2px solid var(--ink); border-radius: var(--radius-sm);
+  padding: 12px 14px; margin-bottom: 18px;
+}
+.pix-copy-note {
+  background: var(--white); border: 2px solid var(--ink); border-left: 10px solid var(--yellow);
+  border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px;
+}
+.pix-copy-note p { margin: 0 0 8px; }
+.pix-copy-note p:last-child { margin: 0; }
+.pix-whats { white-space: normal; text-align: left; }
+.pix-terms .pix-whats { margin-top: 8px; }
+@media (min-width: 720px) { .pix-amount-grid { grid-template-columns: repeat(6, 1fr); max-width: none; } }
+
+.pix-code {
+  display: grid; gap: 16px; align-items: center;
+  background: var(--white); border: 2px solid var(--ink); border-radius: var(--radius-sm);
+  padding: 16px; margin-bottom: 14px;
+}
+.pix-code-main { display: grid; gap: 10px; min-width: 0; }
+.pix-code code {
+  display: block; max-height: 4.8em; overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .82rem; word-break: break-all; user-select: all;
+  background: var(--paper); border-radius: 8px; padding: 8px 10px;
+}
+.pix-code .btn { justify-self: start; }
+.pix-hint { margin: 0; font-size: .88rem; }
+.pix-qr { display: none; }
+.pix-qr svg { width: 168px; height: 168px; }
+@media (min-width: 720px) {
+  .pix-code { grid-template-columns: 1fr auto; }
+  .pix-qr { display: block; }
+}
+.pix-suggest { margin: 0 0 14px; font-weight: 700; }
+
 .pix-terms { margin: 0; padding-left: 1.2em; font-size: .92rem; color: var(--ink); }
 .pix-terms li { margin-bottom: 6px; }
 .pix-terms strong { color: var(--ink); }
@@ -493,6 +550,18 @@ a:hover { text-decoration-thickness: 2px; }
 .reward ul { margin: 0 0 16px; padding-left: 1.2em; }
 .reward-limit { font-size: .88rem; font-weight: 700; margin-bottom: 14px; }
 .reward .btn { margin-top: auto; }
+
+.reward-featured .btn-primary { background: var(--ink); color: var(--white); border-color: var(--ink); box-shadow: none; }
+.reward-featured .btn-primary:hover { background: #000; }
+
+/* ---------- Apoiadores ---------- */
+.backers { background: var(--photo-bg); }
+.backer-list { list-style: none; padding: 0; margin: 26px 0 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+.backer-list li {
+  background: var(--white); border: 2px solid var(--ink); border-radius: 999px;
+  padding: 6px 14px; font-weight: 700;
+}
+.backers-empty { margin: 22px 0 10px; font-size: 1.1rem; font-weight: 600; max-width: 52ch; }
 
 /* ---------- Depoimentos ---------- */
 .testimonial-grid { display: grid; gap: 16px; margin-top: 24px; }

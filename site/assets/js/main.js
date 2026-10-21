@@ -27,9 +27,6 @@
     }).format(n);
   }
   function int(n) { return new Intl.NumberFormat("pt-BR").format(n); }
-  function longDate(d) {
-    return new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "long", year: "numeric", timeZone: TZ }).format(d);
-  }
   function longDateTime(d) {
     return new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: TZ }).format(d);
   }
@@ -42,111 +39,69 @@
     if (text != null) e.textContent = text;
     return e;
   }
-  function setLink(a, href, external) {
-    a.setAttribute("href", href);
-    if (external) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); }
-    else { a.removeAttribute("target"); a.removeAttribute("rel"); }
-  }
 
-  var campaignUrl = isUrl(c.campanhaUrl) ? c.campanhaUrl.trim() : null;
   var instagramUrl = isUrl(c.instagram) ? c.instagram.trim() : null;
-  var rewards = Array.isArray(c.recompensas) ? c.recompensas.filter(function (r) { return r && isStr(r.nome); }) : [];
+  var whatsDigits = isStr(c.whatsapp) ? c.whatsapp.replace(/\D/g, "") : "";
+  if (whatsDigits.length < 10) whatsDigits = "";
+  var hasPix = isStr(c.pixChave);
+  var copyMin = isNum(c.pixValorCopia) ? c.pixValorCopia : null;
+  var tiragem = isNum(c.tiragem) ? int(c.tiragem) : "50";
 
   // ---------- Estado da campanha ----------
+  // A campanha é por Pix e está aberta até dataFim. Depois disso, "encerrada".
   function getState(now) {
-    var ini = parseDate(c.dataInicio), fim = parseDate(c.dataFim);
-    if (!ini) return "embreve";
-    if (now < ini) return "agendado";
-    if (fim && now >= fim) return "encerrada";
-    return "ativa";
+    var fim = parseDate(c.dataFim);
+    return fim && now >= fim ? "encerrada" : "ativa";
   }
 
   function ctaFor(state) {
-    switch (state) {
-      case "agendado":
-        return {
-          primary: campaignUrl
-            ? { text: "Ver a campanha na MeepleStarter", short: "Ver campanha", href: campaignUrl, ext: true }
-            : { text: "Lançamento em breve", short: "Em breve", href: "#como-apoiar" },
-          secondary: instagramUrl ? { text: "Siga para ser avisado(a) do lançamento", href: instagramUrl, ext: true } : null,
-          note: "Lançamento marcado na MeepleStarter."
-        };
-      case "ativa":
-        return {
-          primary: campaignUrl
-            ? { text: "Apoiar agora", short: "Apoiar agora", href: campaignUrl, ext: true }
-            : { text: "Campanha no ar", short: "Apoiar", href: "#como-apoiar" },
-          secondary: rewards.length ? { text: "Ver recompensas", href: "#recompensas" } : null,
-          note: "A campanha está no ar. Lembre: é tudo ou nada, e se a meta não for batida o dinheiro volta."
-        };
-      case "encerrada":
-        return {
-          primary: campaignUrl
-            ? { text: "Ver a campanha na MeepleStarter", short: "Ver campanha", href: campaignUrl, ext: true }
-            : { text: "Campanha encerrada", short: "Encerrada", href: "#como-apoiar" },
-          secondary: instagramUrl ? { text: "Acompanhe no Instagram", href: instagramUrl, ext: true } : null,
-          note: "A campanha foi encerrada. Obrigado a cada pessoa que apoiou o ME!"
-        };
-      default: // "embreve"
-        return {
-          primary: { text: "Em breve na MeepleStarter", short: "Em breve", href: "#como-apoiar" },
-          secondary: instagramUrl ? { text: "Siga para ser avisado(a) do lançamento", href: instagramUrl, ext: true } : null,
-          note: "Campanha em preparação. Veja abaixo como funciona o apoio."
-        };
+    if (state === "encerrada") {
+      return {
+        primary: { text: "Ver quem apoiou", href: "#apoiadores" },
+        secondary: null,
+        note: "A campanha foi encerrada. Obrigado a cada pessoa que apoiou o ME!"
+      };
     }
-  }
-
-  function fillLink(a, spec, label) {
-    a.textContent = label;
-    if (spec.ext) a.appendChild(el("span", { "class": "visually-hidden" }, " (abre em nova aba)"));
-    setLink(a, spec.href, !!spec.ext);
+    return {
+      primary: hasPix ? { text: "Apoiar com Pix", href: "#pix" } : { text: "Como apoiar", href: "#como-apoiar" },
+      secondary: { text: "Ver recompensas", href: "#recompensas" },
+      note: copyMin ? "A partir de " + brl(copyMin) + ", uma cópia do jogo é sua." : "Qualquer valor ajuda a levar o ME para a gráfica."
+    };
   }
 
   function applyCtas(state) {
     var spec = ctaFor(state);
-    $$("[data-cta]").forEach(function (a) {
-      fillLink(a, spec.primary, a.getAttribute("data-cta") === "short" ? spec.primary.short : spec.primary.text);
-    });
+    $$("[data-cta]").forEach(function (a) { a.textContent = spec.primary.text; a.setAttribute("href", spec.primary.href); });
     $$("[data-cta-secondary]").forEach(function (a) {
-      if (spec.secondary) { fillLink(a, spec.secondary, spec.secondary.text); a.hidden = false; }
+      if (spec.secondary) { a.textContent = spec.secondary.text; a.setAttribute("href", spec.secondary.href); a.hidden = false; }
       else a.hidden = true;
     });
     $$("[data-state-note]").forEach(function (p) { p.textContent = spec.note; });
     var finalText = $("[data-final-text]");
     if (finalText && state === "encerrada") finalText.textContent = "A campanha foi encerrada. Obrigado a cada pessoa que apoiou o ME!";
+
+    // Pix só durante a campanha
+    var pixOpen = hasPix && state !== "encerrada";
+    ["[data-pix]", "[data-pix-header]"].forEach(function (s) { $$(s).forEach(function (e) { e.hidden = !pixOpen; }); });
+    $$("[data-reward-pix]").forEach(function (e) { e.hidden = !pixOpen; });
     document.documentElement.setAttribute("data-campaign-state", state);
   }
 
   // ---------- Valores simples ----------
   function applyStatic() {
-    if (isNum(c.tiragem)) $$('[data-config="tiragem"]').forEach(function (s) { s.textContent = int(c.tiragem); });
-    if (isStr(c.plataforma)) $$('[data-config="plataforma"]').forEach(function (s) { s.textContent = c.plataforma; });
-    if (isStr(c.modalidade)) $$('[data-config="modalidade"]').forEach(function (s) { s.textContent = c.modalidade; });
+    if (isNum(c.tiragem)) $$('[data-config="tiragem"]').forEach(function (s) { s.textContent = tiragem; });
+    if (copyMin) $$("[data-pix-offer-value]").forEach(function (s) { s.textContent = brl(copyMin); });
 
     var goal = $("[data-goal-text]");
-    if (goal && isNum(c.metaReais)) {
-      goal.textContent = brl(c.metaReais) + " para produzir " + (isNum(c.tiragem) ? int(c.tiragem) : "50") + " cópias";
-    }
+    if (goal && isNum(c.metaReais)) goal.textContent = brl(c.metaReais) + " para produzir " + tiragem + " cópias";
 
-    var ini = parseDate(c.dataInicio), fim = parseDate(c.dataFim);
-    var dates = $("[data-dates]"), datesText = $("[data-dates-text]");
-    if (dates && (ini || fim)) {
-      var t = ini && fim ? longDate(ini) + " a " + longDate(fim)
-            : ini ? "Início em " + longDateTime(ini)
-            : "Até " + longDateTime(fim);
-      datesText.textContent = t;
-      dates.hidden = false;
-    }
+    var fim = parseDate(c.dataFim);
+    var dates = $("[data-dates]");
+    if (dates && fim) { $("[data-dates-text]").textContent = "Até " + longDateTime(fim); dates.hidden = false; }
 
     var delivery = $("[data-delivery-text]");
     if (delivery && isStr(c.previsaoEntrega)) {
-      delivery.textContent = "A previsão de entrega é " + c.previsaoEntrega.trim() + ". Os detalhes de envio estão na página da campanha.";
-    }
-
-    var footerCampaign = $("[data-footer-campaign]");
-    if (footerCampaign && campaignUrl) {
-      footerCampaign.firstChild.textContent = "Campanha na MeepleStarter";
-      footerCampaign.setAttribute("href", campaignUrl);
+      delivery.textContent = "A previsão de entrega é " + c.previsaoEntrega.trim() + ". O frete é combinado pelo WhatsApp, conforme o seu endereço.";
     }
   }
 
@@ -154,16 +109,17 @@
   function applyContacts() {
     var links = [];
     if (instagramUrl) links.push({ key: "instagram", label: "Instagram", href: instagramUrl, ext: true });
-    if (isStr(c.whatsapp)) {
-      var digits = c.whatsapp.replace(/\D/g, "");
-      if (digits.length >= 10) links.push({ key: "whatsapp", label: "WhatsApp", href: "https://wa.me/" + digits, ext: true });
-    }
+    if (whatsDigits) links.push({ key: "whatsapp", label: "WhatsApp", href: "https://wa.me/" + whatsDigits, ext: true });
     if (isStr(c.email) && /@/.test(c.email)) links.push({ key: "email", label: "E-mail", href: "mailto:" + c.email.trim(), ext: false });
 
     links.forEach(function (l) {
       var a = $('[data-link="' + l.key + '"]');
       if (a) { a.setAttribute("href", l.href); a.parentElement.hidden = false; }
     });
+    if (whatsDigits) {
+      var fa = $('[data-link="whatsapp-faq"]');
+      if (fa) { fa.setAttribute("href", "https://wa.me/" + whatsDigits); $("[data-contact-line-faq]").hidden = false; }
+    }
 
     var line = $("[data-contact-line]"), holder = $("[data-contact-links]");
     if (line && holder && links.length) {
@@ -177,62 +133,222 @@
     }
   }
 
-  // ---------- Contribuição direta por Pix ----------
+  // ---------- Pix ----------
+  // Monta o "Pix copia e cola" (BR Code, padrão EMV do Banco Central).
+  function emv(id, value) { return id + String(value.length).padStart(2, "0") + value; }
+  function crc16(str) {
+    var crc = 0xFFFF;
+    for (var i = 0; i < str.length; i++) {
+      crc ^= str.charCodeAt(i) << 8;
+      for (var j = 0; j < 8; j++) crc = (crc & 0x8000) ? ((crc << 1) ^ 0x1021) & 0xFFFF : (crc << 1) & 0xFFFF;
+    }
+    return crc.toString(16).toUpperCase().padStart(4, "0");
+  }
+  function ascii(s, max) {
+    return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9 ]/g, "").replace(/\s+/g, " ").trim().slice(0, max);
+  }
+  function pixPayload(key, amount, name, city) {
+    var p = emv("00", "01") +
+      emv("26", emv("00", "br.gov.bcb.pix") + emv("01", key)) +
+      emv("52", "0000") + emv("53", "986") + emv("54", amount.toFixed(2)) +
+      emv("58", "BR") + emv("59", name) + emv("60", city) +
+      emv("62", emv("05", "***")) + "6304";
+    return p + crc16(p);
+  }
+
+  var qrLoader = null;
+  function loadQr() {
+    if (window.qrcode) return Promise.resolve();
+    if (!qrLoader) qrLoader = new Promise(function (ok, fail) {
+      var s = document.createElement("script");
+      s.src = "assets/js/vendor/qrcode.js";
+      s.onload = ok; s.onerror = fail;
+      document.head.appendChild(s);
+    });
+    return qrLoader;
+  }
+  function drawQr(holder, text, label) {
+    loadQr().then(function () {
+      var qr = window.qrcode(0, "M");
+      qr.addData(text); qr.make();
+      var n = qr.getModuleCount(), m = 2, d = "";
+      for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (qr.isDark(y, x)) d += "M" + (x + m) + " " + (y + m) + "h1v1h-1z";
+      var ns = "http://www.w3.org/2000/svg";
+      var svg = document.createElementNS(ns, "svg");
+      svg.setAttribute("viewBox", "0 0 " + (n + 2 * m) + " " + (n + 2 * m));
+      svg.setAttribute("role", "img");
+      svg.setAttribute("aria-label", label);
+      svg.setAttribute("shape-rendering", "crispEdges");
+      var bg = document.createElementNS(ns, "rect");
+      bg.setAttribute("width", "100%"); bg.setAttribute("height", "100%"); bg.setAttribute("fill", "#fff");
+      var path = document.createElementNS(ns, "path");
+      path.setAttribute("d", d); path.setAttribute("fill", "#232B2C");
+      svg.appendChild(bg); svg.appendChild(path);
+      holder.replaceChildren(svg);
+    }, function () { holder.replaceChildren(); });
+  }
+
+  function copyText(text, fallbackNode, btn, idleLabel, fb, okMsg) {
+    function done(ok) {
+      fb.textContent = ok ? okMsg : "Não deu para copiar automaticamente. Selecione o texto acima e copie.";
+      if (ok) { btn.textContent = "Copiado!"; setTimeout(function () { btn.textContent = idleLabel; }, 2500); }
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else {
+      var range = document.createRange();
+      range.selectNodeContents(fallbackNode);
+      var sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(range);
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      done(ok);
+    }
+  }
+
+  // Botão de WhatsApp com a mensagem pronta para enviar o comprovante.
+  function fillWhats(holder, amount) {
+    if (!holder) return;
+    holder.replaceChildren();
+    if (whatsDigits) {
+      var withCopy = copyMin && (!amount || amount >= copyMin);
+      var msg = "Olá! Fiz um Pix" + (amount ? " de " + brl(amount) : "") + " para apoiar o ME. Segue o comprovante.\n" +
+        "Quero aparecer na lista de apoiadores como: \n" +
+        (withCopy ? "Endereço para envio da cópia" + (amount ? "" : " (se apoiei com " + brl(copyMin) + " ou mais)") + ": " : "");
+      var a = el("a", { "class": "btn btn-primary btn-sm pix-whats", href: "https://wa.me/" + whatsDigits + "?text=" + encodeURIComponent(msg), target: "_blank", rel: "noopener" }, "Enviar comprovante pelo WhatsApp");
+      a.appendChild(el("span", { "class": "visually-hidden" }, " (abre em nova aba)"));
+      holder.appendChild(a);
+    } else {
+      holder.textContent = "Guarde o comprovante do Pix: o WhatsApp para enviá-lo será publicado nesta página.";
+    }
+  }
+
   function applyPix() {
     var box = $("[data-pix]");
-    if (!box || !isStr(c.pixChave)) return;
+    if (!box || !hasPix) return;
     var key = c.pixChave.trim();
-    $("[data-pix-key]", box).textContent = key;
-    box.hidden = false;
-    var faq = $("[data-pix-faq]");
-    if (faq) faq.hidden = false;
-    var headerBtn = $("[data-pix-header]");
-    if (headerBtn) headerBtn.hidden = false;
+    var keyNode = $("[data-pix-key]", box);
+    keyNode.textContent = key;
 
-    var btn = $("[data-pix-copy]", box), fb = $("[data-pix-feedback]", box);
-    btn.addEventListener("click", function () {
-      function done(ok) {
-        fb.textContent = ok ? "Chave copiada. Agora é só colar no app do seu banco." : "Não deu para copiar automaticamente. Selecione a chave acima e copie.";
-        if (ok) { btn.textContent = "Copiada!"; setTimeout(function () { btn.textContent = "Copiar chave"; }, 2500); }
-      }
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(key).then(function () { done(true); }, function () { done(false); });
-      } else {
-        var range = document.createRange();
-        range.selectNodeContents($("[data-pix-key]", box));
-        var sel = window.getSelection();
-        sel.removeAllRanges(); sel.addRange(range);
-        var ok = false;
-        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
-        done(ok);
-      }
+    if (copyMin) {
+      ["[data-pix-offer]", "[data-pix-term-copy]", "[data-pix-term-below]", "[data-pix-term-address]"].forEach(function (s) {
+        $$(s, box).forEach(function (e) { e.hidden = false; });
+      });
+    }
+    fillWhats($(".pix-terms [data-pix-whats]", box), null);
+
+    var fb = $("[data-pix-feedback]", box);
+
+    if (isNum(c.metaReais)) {
+      $("[data-pix-goal-value]", box).textContent = brl(c.metaReais);
+      $("[data-pix-goal]", box).hidden = false;
+    }
+
+    var keyBtn = $("[data-pix-copy]", box);
+    keyBtn.addEventListener("click", function () {
+      copyText(key, keyNode, keyBtn, "Copiar chave", fb, "Chave copiada. Agora é só colar no app do seu banco.");
+    });
+
+    // Valores pré-definidos
+    var values = Array.isArray(c.pixValores) ? c.pixValores.filter(isNum) : [];
+    values = values.filter(function (v, i) { return values.indexOf(v) === i; });
+    if (!values.length) return;
+
+    var name = isStr(c.pixNome) ? ascii(c.pixNome, 25) : "";
+    var city = isStr(c.pixCidade) ? ascii(c.pixCidade, 15) : "";
+    var canCode = name !== "" && city !== "";
+
+    var grid = $("[data-pix-amount-grid]", box);
+    var codeBox = $("[data-pix-code]", box), codeText = $("[data-pix-code-text]", box);
+    var codeLabel = $("[data-pix-code-label]", box), codeBtn = $("[data-pix-code-copy]", box);
+    var qrHolder = $("[data-pix-qr]", box), suggest = $("[data-pix-suggest]", box);
+    var note = $("[data-pix-copy-note]", box);
+    var current = "";
+
+    if (canCode) $("[data-pix-key-label]", box).textContent = "Ou use a chave Pix e escolha outro valor";
+
+    values.forEach(function (v) {
+      var b = el("button", { type: "button", "class": "pix-amount", "aria-pressed": "false", "data-value": String(v) }, brl(v));
+      var withCopy = copyMin && v >= copyMin;
+      if (withCopy) { b.classList.add("pix-amount-copy"); b.appendChild(el("small", null, " + cópia do jogo")); }
+      b.addEventListener("click", function () {
+        $$(".pix-amount", grid).forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+        fb.textContent = "";
+        $("[data-pix-note-text]", note).replaceChildren(
+          el("strong", null, withCopy ? "Este valor garante uma cópia do ME e seu nome na lista de apoiadores." : "Este valor coloca seu nome na lista de apoiadores deste site."),
+          document.createTextNode(withCopy ? " O frete é cobrado à parte e combinado depois." : " Depois do Pix, envie o comprovante dizendo como quer aparecer."));
+        fillWhats($("[data-pix-whats]", note), v);
+        note.hidden = false;
+        if (canCode) {
+          current = pixPayload(key, v, name, city);
+          codeText.textContent = current;
+          codeLabel.textContent = "Pix copia e cola de " + brl(v);
+          codeBtn.textContent = "Copiar código Pix";
+          codeBox.hidden = false;
+          drawQr(qrHolder, current, "QR Code do Pix de " + brl(v));
+        } else {
+          suggest.textContent = "Copie a chave abaixo e digite " + brl(v) + " no app do seu banco.";
+          suggest.hidden = false;
+        }
+      });
+      grid.appendChild(b);
+    });
+    codeBtn.addEventListener("click", function () {
+      if (current) copyText(current, codeText, codeBtn, "Copiar código Pix", fb, "Código copiado. No app do banco, escolha Pix copia e cola e cole.");
+    });
+    $("[data-pix-amounts]", box).hidden = false;
+
+    // O card "Cópia do ME" já deixa o valor mínimo selecionado.
+    $$('[data-pix-select="copia"]').forEach(function (a) {
+      a.addEventListener("click", function () {
+        var target = copyMin && $('.pix-amount[data-value="' + copyMin + '"]', grid);
+        if (target) target.click();
+      });
     });
   }
 
-  // ---------- Progresso da meta ----------
+  // ---------- Barra de meta ----------
   function applyProgress(state) {
-    var showBar = (state === "ativa" || state === "encerrada") && isNum(c.metaReais) && isNum(c.arrecadadoReais);
-    var showBackers = (state === "ativa" || state === "encerrada") && isNum(c.apoiadores);
+    var hasGoal = isNum(c.metaReais), hasRaised = isNum(c.arrecadadoReais);
     $$("[data-progress]").forEach(function (box) {
-      var main = $("[data-progress-main]", box);
-      if (showBar) {
-        var pct = Math.floor((c.arrecadadoReais / c.metaReais) * 100);
-        var bar = $("[role=progressbar]", box);
-        bar.setAttribute("aria-valuenow", String(Math.min(pct, 100)));
-        bar.setAttribute("aria-valuetext", pct + "% da meta");
-        $("[data-progress-fill]", box).style.width = Math.min(pct, 100) + "%";
-        $("[data-progress-raised]", box).textContent = brl(c.arrecadadoReais);
-        $("[data-progress-of]", box).textContent = "arrecadados de " + brl(c.metaReais);
-        $("[data-progress-pct]", box).textContent = "(" + pct + "%)";
+      if (!hasGoal) { box.hidden = true; return; }
+      var pct = hasRaised ? Math.floor((c.arrecadadoReais / c.metaReais) * 100) : 0;
+      var bar = $("[role=progressbar]", box);
+      bar.setAttribute("aria-valuenow", String(Math.min(pct, 100)));
+      bar.setAttribute("aria-valuetext", hasRaised ? pct + "% da meta" : "Nenhum apoio registrado ainda");
+      $("[data-progress-fill]", box).style.width = Math.min(pct, 100) + "%";
+
+      var text = $("[data-progress-text]", box);
+      if (hasRaised) {
+        text.replaceChildren(el("strong", null, brl(c.arrecadadoReais)),
+          document.createTextNode(" arrecadados de " + brl(c.metaReais) + " "),
+          el("span", { "class": "progress-pct" }, "(" + pct + "%)"));
+      } else {
+        text.replaceChildren(document.createTextNode("Meta: "), el("strong", null, brl(c.metaReais)),
+          document.createTextNode(" para produzir " + tiragem + " cópias." + (state === "encerrada" ? "" : " Seja a primeira pessoa a apoiar!")));
       }
-      if (main) main.hidden = !showBar;
+
       var backers = $("[data-progress-backers]", box);
-      if (showBackers) {
+      if (isNum(c.apoiadores)) {
         backers.textContent = int(c.apoiadores) + (c.apoiadores === 1 ? " apoiador" : " apoiadores");
         backers.hidden = false;
       } else backers.hidden = true;
-      box.hidden = !(showBar || showBackers);
+
+      var upd = $("[data-progress-updated]", box);
+      if (isStr(c.arrecadadoAtualizadoEm)) upd.textContent = "Atualizado em " + c.arrecadadoAtualizadoEm.trim() + ". O valor é atualizado manualmente conforme os Pix são confirmados.";
+      box.hidden = false;
     });
+  }
+
+  // ---------- Lista de apoiadores ----------
+  function applyBackers() {
+    var list = $("[data-backers]"), empty = $("[data-backers-empty]");
+    if (!list) return;
+    var names = Array.isArray(c.listaApoiadores) ? c.listaApoiadores.filter(isStr) : [];
+    if (!names.length) return;
+    names.forEach(function (n) { list.appendChild(el("li", null, n.trim())); });
+    list.hidden = false;
+    if (empty) empty.hidden = true;
   }
 
   // ---------- Contagem regressiva ----------
@@ -241,12 +357,10 @@
     var box = $("[data-countdown]");
     if (!box) return;
     if (timer) { clearInterval(timer); timer = null; }
-    var target = null, label = "";
-    if (state === "agendado") { target = parseDate(c.dataInicio); label = "A campanha começa em"; }
-    else if (state === "ativa" && parseDate(c.dataFim)) { target = parseDate(c.dataFim); label = "A campanha termina em"; }
+    var target = state === "ativa" ? parseDate(c.dataFim) : null;
     if (!target) { box.hidden = true; return; }
 
-    $("[data-countdown-label]", box).textContent = label;
+    $("[data-countdown-label]", box).textContent = "A campanha termina em";
     var parts = { d: $('[data-cd="d"]', box), h: $('[data-cd="h"]', box), m: $('[data-cd="m"]', box), s: $('[data-cd="s"]', box) };
     function tick() {
       var diff = target.getTime() - Date.now();
@@ -262,44 +376,11 @@
     timer = setInterval(tick, 1000);
   }
 
-  // ---------- Recompensas ----------
-  function applyRewards(state) {
-    var grid = $("[data-rewards]"), lead = $("[data-rewards-lead]");
-    if (!grid || !rewards.length) return; // mantém os cards-esqueleto do HTML
-    grid.replaceChildren();
-    if (lead) lead.textContent = state === "encerrada"
-      ? "Estes foram os níveis de apoio da campanha."
-      : "Cada nível de apoio está disponível na página da campanha na MeepleStarter.";
-
-    rewards.forEach(function (r) {
-      var card = el("article", { "class": "reward" + (r.destaque === true ? " reward-featured" : "") });
-      if (r.destaque === true) card.appendChild(el("span", { "class": "reward-badge" }, "Recomendado"));
-      card.appendChild(el("h3", null, r.nome.trim()));
-      if (isNum(r.valor)) card.appendChild(el("p", { "class": "reward-price" }, brl(r.valor)));
-      if (isStr(r.descricao)) card.appendChild(el("p", { "class": "reward-desc" }, r.descricao.trim()));
-      var itens = Array.isArray(r.itens) ? r.itens.filter(isStr) : [];
-      if (itens.length) {
-        var ul = el("ul");
-        itens.forEach(function (i) { ul.appendChild(el("li", null, i.trim())); });
-        card.appendChild(ul);
-      }
-      if (isNum(r.limite)) card.appendChild(el("p", { "class": "reward-limit" }, "Limitado a " + int(r.limite) + (r.limite === 1 ? " apoio" : " apoios")));
-      if (campaignUrl && state !== "encerrada") {
-        var a = el("a", { "class": "btn " + (r.destaque === true ? "btn-primary" : "btn-ghost") });
-        fillLink(a, { href: campaignUrl, ext: true }, state === "ativa" ? "Apoiar com esta recompensa" : "Ver na MeepleStarter");
-        if (r.destaque === true) { a.style.background = "var(--ink)"; a.style.color = "var(--white)"; a.style.boxShadow = "none"; }
-        card.appendChild(a);
-      }
-      grid.appendChild(card);
-    });
-  }
-
   function applyAll() {
     var state = getState(new Date());
     applyCtas(state);
     applyProgress(state);
     applyCountdown(state);
-    applyRewards(state);
   }
 
   // ---------- Demo "Experimente" ----------
@@ -402,7 +483,7 @@
       box.appendChild(el("p", null, msg));
       box.appendChild(el("p", null, "No ME são 180 perguntas, e a pessoa do outro lado da mesa é real."));
       var g = el("div", { "class": "cta-group" });
-      var a = el("a", { "class": "btn btn-primary", "data-cta": "primary", href: "#como-apoiar" }, "Em breve na MeepleStarter");
+      var a = el("a", { "class": "btn btn-primary", "data-cta": "primary", href: "#pix" }, "Apoiar com Pix");
       g.appendChild(a);
       box.appendChild(g);
       var again = el("button", { type: "button", "class": "dq-restart" }, "Jogar de novo");
@@ -430,6 +511,7 @@
   applyStatic();
   applyContacts();
   applyPix();
+  applyBackers();
   applyAll();
   initDemo();
   initReveal();

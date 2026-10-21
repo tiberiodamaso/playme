@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ME · Quanto você realmente conhece seus amigos? | Jogo de tabuleiro 18+</title>
-  <meta name="description" content="ME é um party game para maiores de 18 anos: você avança acertando como seus amigos responderiam a perguntas sobre eles mesmos. De 4 a 8 jogadores. Primeira tiragem de 50 cópias, por financiamento coletivo na MeepleStarter.">
+  <meta name="description" content="ME é um party game para maiores de 18 anos: você avança acertando como seus amigos responderiam a perguntas sobre eles mesmos. De 4 a 8 jogadores. Primeira tiragem de 50 cópias, por financiamento coletivo com apoio via Pix.">
   <link rel="canonical" href="https://playme.app.br/">
   <meta name="theme-color" content="#232B2C">
   <meta name="color-scheme" content="light">
@@ -59,8 +59,7 @@
         <a href="#faq">Dúvidas</a>
       </nav>
       <span class="age-chip" aria-label="Para maiores de 18 anos">18+</span>
-      <a class="btn btn-pix btn-sm" href="#pix" data-config="pixChave" data-pix-header hidden><span><span class="hide-sm">Apoiar com </span>Pix</span></a>
-      <a class="btn btn-primary btn-sm" href="#como-apoiar" data-cta="short">Em breve</a>
+      <a class="btn btn-pix btn-sm" href="#pix" data-config="pixChave" data-pix-header hidden>Apoiar com Pix</a>
     </div>
   </header>
 
@@ -78,15 +77,15 @@
             <li><strong>45 a 60</strong> min</li>
             <li><strong>18+</strong> anos</li>
           </ul>
-          <p class="scarcity"><span class="dot" aria-hidden="true"></span>Primeira tiragem: <strong><span data-config="tiragem">50</span> cópias</strong>, por financiamento coletivo na <span data-config="plataforma">MeepleStarter</span>.</p>
+          <p class="scarcity"><span class="dot" aria-hidden="true"></span>Primeira tiragem: <strong><span data-config="tiragem">50</span> cópias</strong>, por financiamento coletivo direto com o criador.</p>
 
           <div class="cta-group">
-            <a class="btn btn-primary btn-lg" href="#como-apoiar" data-cta="primary">Em breve na MeepleStarter</a>
-            <a class="btn btn-ghost" href="#" data-cta-secondary hidden></a>
+            <a class="btn btn-primary btn-lg" href="#pix" data-cta="primary">Apoiar com Pix</a>
+            <a class="btn btn-ghost" href="#recompensas" data-cta-secondary>Ver recompensas</a>
           </div>
-          <p class="state-note" data-state-note>Campanha em preparação. Veja abaixo como funciona o apoio.</p>
+          <p class="state-note" data-state-note>A partir de R$ 500, uma cópia do jogo é sua.</p>
 
-          <div class="countdown" data-countdown data-config="dataInicio dataFim" hidden>
+          <div class="countdown" data-countdown data-config="dataFim" hidden>
             <p class="countdown-label" data-countdown-label></p>
             <div class="countdown-units" role="timer" aria-live="off">
               <span><b data-cd="d">0</b><small>dias</small></span>
@@ -96,12 +95,11 @@
             </div>
           </div>
 
-          <div class="progress" data-progress data-config="metaReais arrecadadoReais apoiadores" hidden>
-            <div data-progress-main hidden>
-              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progresso da meta"><span data-progress-fill></span></div>
-              <p class="progress-text"><strong data-progress-raised></strong> <span data-progress-of></span> <span class="progress-pct" data-progress-pct></span></p>
-            </div>
-            <p class="progress-backers" data-config="apoiadores" data-progress-backers hidden></p>
+          <div class="progress" data-progress data-config="metaReais arrecadadoReais apoiadores arrecadadoAtualizadoEm">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progresso da meta"><span data-progress-fill></span></div>
+            <p class="progress-text" data-progress-text>Meta: <strong>R$ 25.000</strong> para produzir 50 cópias.</p>
+            <p class="progress-backers" data-progress-backers hidden></p>
+            <p class="progress-updated" data-progress-updated>Valor atualizado manualmente conforme os Pix são confirmados.</p>
           </div>
         </div>
 
@@ -215,7 +213,7 @@
     <section class="cta-band" aria-label="Apoie o ME">
       <div class="wrap cta-band-inner">
         <p>Agora imagine isso com quem você conhece de verdade.</p>
-        <a class="btn btn-primary" href="#como-apoiar" data-cta="primary">Em breve na MeepleStarter</a>
+        <a class="btn btn-primary" href="#pix" data-cta="primary">Apoiar com Pix</a>
       </div>
     </section>
 
@@ -295,7 +293,7 @@
     <section class="section why" aria-labelledby="why-title">
       <div class="wrap">
         <p class="kicker">Por que apoiar agora</p>
-        <h2 id="why-title">Uma primeira edição pequena, com risco zero para você.</h2>
+        <h2 id="why-title">Uma primeira edição pequena, feita com quem acredita no jogo.</h2>
         <div class="why-grid">
           <article class="why-card reveal">
             <p class="why-big"><span data-config="tiragem">50</span></p>
@@ -303,14 +301,14 @@
             <p>A campanha existe para produzir uma tiragem de <span data-config="tiragem">50</span> cópias do ME. É uma primeira edição pequena, para quem chegar primeiro.</p>
           </article>
           <article class="why-card reveal">
-            <p class="why-big">100%</p>
-            <h3>de volta se a meta não for batida</h3>
-            <p>A campanha é de <strong data-config="modalidade">Meta Fixa</strong>, ou seja, tudo ou nada. Se a meta não for atingida no prazo, a <span data-config="plataforma">MeepleStarter</span> devolve todos os apoios em até 5 dias úteis.</p>
+            <p class="why-big"><span data-pix-offer-value>R$ 500</span></p>
+            <h3>garantem a sua cópia</h3>
+            <p>Com <span data-pix-offer-value>R$ 500</span> ou mais, uma cópia do ME é sua (frete à parte). Com qualquer valor, seu nome entra na lista de apoiadores deste site.</p>
           </article>
           <article class="why-card reveal">
             <p class="why-big">1</p>
             <h3>criador independente</h3>
-            <p>O ME foi criado por Tibério, desenvolvedor independente de Ribeirão Preto (SP). Cada apoio ajuda a tirar o jogo do protótipo e levá-lo para a gráfica.</p>
+            <p>O ME foi criado por Tibério, desenvolvedor independente de Ribeirão Preto (SP). Sem plataforma no meio: cada Pix vai direto para tirar o jogo do protótipo e levá-lo para a gráfica.</p>
           </article>
         </div>
       </div>
@@ -320,12 +318,12 @@
     <section class="section support" id="como-apoiar" aria-labelledby="apoiar-title">
       <div class="wrap">
         <p class="kicker">Como apoiar</p>
-        <h2 id="apoiar-title">Financiamento coletivo, sem mistério.</h2>
-        <p class="section-lead">Em vez de comprar um jogo pronto, você ajuda a fazê-lo existir. Os apoios pagam a produção e, em troca, cada apoiador recebe a recompensa que escolheu.</p>
+        <h2 id="apoiar-title">Financiamento coletivo, direto e sem mistério.</h2>
+        <p class="section-lead">Em vez de comprar um jogo pronto, você ajuda a fazê-lo existir. Os apoios pagam a produção da primeira tiragem e, em troca, cada pessoa recebe a recompensa do valor que escolheu.</p>
         <ol class="support-steps">
-          <li><span class="ss-n" aria-hidden="true">1</span><h3>Escolha sua recompensa</h3><p>Na página do ME na <span data-config="plataforma">MeepleStarter</span>, escolha o nível de apoio que você quer.</p></li>
-          <li><span class="ss-n" aria-hidden="true">2</span><h3>Pague uma única vez</h3><p>Não é assinatura. O valor só é repassado ao criador depois do fim da campanha, e só se a meta for atingida.</p></li>
-          <li><span class="ss-n" aria-hidden="true">3</span><h3>Receba o jogo ou o dinheiro de volta</h3><p>Meta batida: o ME vai para a gráfica e as recompensas são enviadas. Meta não batida: todos os apoios são devolvidos em até 5 dias úteis.</p></li>
+          <li><span class="ss-n" aria-hidden="true">1</span><h3>Escolha um valor</h3><p>Qualquer valor coloca seu nome na lista de apoiadores. A partir de <span data-pix-offer-value>R$ 500</span>, você também garante uma cópia do jogo.</p></li>
+          <li><span class="ss-n" aria-hidden="true">2</span><h3>Pague por Pix</h3><p>Use o Pix copia e cola, o QR Code ou a chave. O dinheiro vai direto para o criador, sem plataforma intermediária.</p></li>
+          <li><span class="ss-n" aria-hidden="true">3</span><h3>Envie o comprovante</h3><p>Mande o comprovante pelo WhatsApp e diga como quer aparecer na lista. Se apoiou com <span data-pix-offer-value>R$ 500</span> ou mais, informe também o endereço de entrega.</p></li>
         </ol>
 
         <div class="campaign-panel" data-campaign-panel>
@@ -333,39 +331,62 @@
             <p class="cp-label">Meta</p>
             <p class="cp-value" data-config="metaReais tiragem" data-goal-text>Viabilizar a produção de <span data-config="tiragem">50</span> cópias</p>
           </div>
-          <div class="cp-row" data-config="dataInicio dataFim" data-dates hidden>
-            <p class="cp-label">Período</p>
+          <div class="cp-row" data-config="dataFim" data-dates hidden>
+            <p class="cp-label">Prazo</p>
             <p class="cp-value" data-dates-text></p>
           </div>
           <div class="cp-row">
-            <p class="cp-label">Modalidade</p>
-            <p class="cp-value"><span data-config="modalidade">Meta Fixa</span> (tudo ou nada)</p>
+            <p class="cp-label">Se a meta não for batida</p>
+            <p class="cp-value">O jogo é produzido com o valor arrecadado</p>
           </div>
-          <div class="progress" data-progress data-config="metaReais arrecadadoReais apoiadores" hidden>
-            <div data-progress-main hidden>
-              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progresso da meta"><span data-progress-fill></span></div>
-              <p class="progress-text"><strong data-progress-raised></strong> <span data-progress-of></span> <span class="progress-pct" data-progress-pct></span></p>
-            </div>
-            <p class="progress-backers" data-config="apoiadores" data-progress-backers hidden></p>
+          <div class="progress" data-progress data-config="metaReais arrecadadoReais apoiadores arrecadadoAtualizadoEm">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progresso da meta"><span data-progress-fill></span></div>
+            <p class="progress-text" data-progress-text>Meta: <strong>R$ 25.000</strong> para produzir 50 cópias.</p>
+            <p class="progress-backers" data-progress-backers hidden></p>
+            <p class="progress-updated" data-progress-updated>Valor atualizado manualmente conforme os Pix são confirmados.</p>
           </div>
         </div>
 
-        <p class="fineprint">A <span data-config="plataforma">MeepleStarter</span> é a plataforma que recebe os apoios e os repassa ao criador. A produção e a entrega das recompensas são responsabilidade do criador do ME, como em toda campanha da plataforma.</p>
+        <p class="fineprint">Os apoios são feitos por Pix diretamente ao criador do ME, sem intermediação de plataforma. A produção e a entrega das cópias são responsabilidade do criador.</p>
 
         <div class="pix-box" id="pix" data-config="pixChave" data-pix hidden>
           <p class="pix-tag">Apoie com Pix</p>
-          <h3>Prefere contribuir direto, por Pix?</h3>
-          <p>Qualquer valor ajuda a levar o ME para a gráfica. É uma contribuição voluntária, feita diretamente ao criador, fora da MeepleStarter.</p>
+          <h3>Escolha um valor e apoie agora</h3>
+          <p>Qualquer valor ajuda a levar o ME para a gráfica.</p>
+          <p class="pix-offer" data-config="pixValorCopia" data-pix-offer hidden><strong>A partir de <span data-pix-offer-value>R$ 500</span>, você garante uma cópia do ME.</strong> Com qualquer valor, seu nome entra na lista de apoiadores deste site.</p>
+          <p class="pix-goal" data-config="metaReais" data-pix-goal hidden>Meta da campanha: <strong data-pix-goal-value></strong> para produzir <span data-config="tiragem">50</span> cópias.</p>
+
+          <div class="pix-amounts" data-config="pixValores" data-pix-amounts hidden>
+            <p class="pix-label" id="pix-amounts-label">Escolha um valor</p>
+            <div class="pix-amount-grid" role="group" aria-labelledby="pix-amounts-label" data-pix-amount-grid></div>
+          </div>
+
+          <div class="pix-code" data-config="pixNome pixCidade" data-pix-code hidden>
+            <div class="pix-code-main">
+              <p class="pix-label" data-pix-code-label>Pix copia e cola</p>
+              <code data-pix-code-text></code>
+              <button type="button" class="btn btn-primary btn-sm" data-pix-code-copy>Copiar código Pix</button>
+              <p class="pix-hint">No app do seu banco, escolha <strong>Pix copia e cola</strong> e cole o código. O valor já vem preenchido.</p>
+            </div>
+            <div class="pix-qr" data-pix-qr></div>
+          </div>
+          <p class="pix-suggest" role="status" data-pix-suggest hidden></p>
+          <div class="pix-copy-note" data-pix-copy-note hidden>
+            <p data-pix-note-text></p>
+            <p data-pix-whats></p>
+          </div>
+
           <div class="pix-key">
-            <p class="pix-label" id="pix-label">Chave Pix</p>
+            <p class="pix-label" id="pix-label" data-pix-key-label>Chave Pix</p>
             <code data-pix-key aria-labelledby="pix-label"></code>
             <button type="button" class="btn btn-primary btn-sm" data-pix-copy>Copiar chave</button>
           </div>
           <p class="pix-feedback" role="status" data-pix-feedback></p>
           <ul class="pix-terms">
-            <li><strong>Não inclui recompensa nem cópia do jogo.</strong> Cópias e recompensas estão só na campanha da MeepleStarter.</li>
-            <li><strong>Não conta para a meta</strong> da campanha na MeepleStarter.</li>
-            <li><strong>Se a meta não for atingida, o valor é devolvido integralmente</strong> para a conta de origem.</li>
+            <li data-config="pixValorCopia" data-pix-term-copy hidden><strong>A partir de <span data-pix-offer-value>R$ 500</span>: uma cópia do ME e seu nome na lista de apoiadores.</strong> O frete é cobrado à parte e combinado depois.</li>
+            <li><strong>Qualquer valor<span data-pix-term-below hidden> abaixo disso</span>: seu nome na lista de apoiadores</strong> deste site, do jeito que você pedir (ou nenhum, se preferir).</li>
+            <li><strong>Depois do Pix, envie o comprovante pelo WhatsApp</strong> dizendo como quer aparecer na lista<span data-pix-term-address hidden> e, se for o caso, o endereço de entrega</span>. <span data-pix-whats></span></li>
+            <li><strong>O jogo será produzido mesmo que a meta não seja atingida</strong>, com o valor arrecadado. Por isso não há devolução por meta não atingida.</li>
           </ul>
         </div>
       </div>
@@ -376,21 +397,41 @@
       <div class="wrap">
         <p class="kicker">Recompensas</p>
         <h2 id="rewards-title">Escolha como você quer entrar no jogo.</h2>
-        <p class="section-lead" data-rewards-lead data-config="recompensas">Os níveis de apoio serão revelados no lançamento da campanha.</p>
-        <div class="reward-grid" data-config="recompensas" data-rewards>
-          <div class="reward reward-skeleton">
-            <img src="assets/img/personagens/elipse.svg" alt="" width="45" height="116" loading="lazy">
-            <p class="reward-soon">Recompensa em breve</p>
-          </div>
-          <div class="reward reward-skeleton">
-            <img src="assets/img/personagens/retangulo.svg" alt="" width="42" height="114" loading="lazy">
-            <p class="reward-soon">Recompensa em breve</p>
-          </div>
-          <div class="reward reward-skeleton">
-            <img src="assets/img/personagens/pentagono.svg" alt="" width="40" height="121" loading="lazy">
-            <p class="reward-soon">Recompensa em breve</p>
-          </div>
+        <p class="section-lead">São duas formas de apoiar, as duas por Pix.</p>
+        <div class="reward-grid">
+          <article class="reward">
+            <h3>Nome no site</h3>
+            <p class="reward-price">Qualquer valor</p>
+            <p class="reward-desc">Para quem quer ajudar o ME a existir.</p>
+            <ul>
+              <li>Seu nome (ou apelido) na lista de apoiadores deste site</li>
+            </ul>
+            <a class="btn btn-ghost" href="#pix" data-reward-pix>Apoiar com Pix</a>
+          </article>
+          <article class="reward reward-featured">
+            <span class="reward-badge">Garante o jogo</span>
+            <h3>Cópia do ME</h3>
+            <p class="reward-price">A partir de <span data-pix-offer-value>R$ 500</span></p>
+            <p class="reward-desc">Uma das <span data-config="tiragem">50</span> cópias da primeira tiragem.</p>
+            <ul>
+              <li>Uma cópia do jogo ME</li>
+              <li>Seu nome na lista de apoiadores deste site</li>
+              <li>Frete à parte, combinado depois pelo WhatsApp</li>
+            </ul>
+            <a class="btn btn-primary reward-cta" href="#pix" data-reward-pix data-pix-select="copia"><span>Apoiar com <span data-pix-offer-value>R$ 500</span></span></a>
+          </article>
         </div>
+      </div>
+    </section>
+
+    <!-- APOIADORES: nomes vêm de listaApoiadores no config.js -->
+    <section class="section backers" id="apoiadores" aria-labelledby="backers-title">
+      <div class="wrap">
+        <p class="kicker">Apoiadores</p>
+        <h2 id="backers-title">Quem já está nessa com a gente.</h2>
+        <ul class="backer-list" data-config="listaApoiadores" data-backers hidden></ul>
+        <p class="backers-empty" data-backers-empty>Ainda não há nomes por aqui. Apoie com qualquer valor e seja o primeiro nome desta lista.</p>
+        <p class="fineprint">Os nomes aparecem do jeito que cada pessoa pediu, depois que o Pix é confirmado. A lista é atualizada manualmente.</p>
       </div>
     </section>
 
@@ -438,31 +479,35 @@
         <div class="accordion">
           <details>
             <summary>O que é financiamento coletivo?</summary>
-            <div><p>É quando várias pessoas apoiam um projeto antes de ele existir. No caso do ME, os apoios pagam a produção da primeira tiragem e cada apoiador recebe a recompensa que escolheu. A campanha acontece na <a href="https://meeplestarter.com.br/" rel="noopener" target="_blank">MeepleStarter<span class="visually-hidden"> (abre em nova aba)</span></a>, plataforma brasileira de financiamento coletivo de jogos.</p></div>
+            <div><p>É quando várias pessoas apoiam um projeto antes de ele existir. No ME, os apoios pagam a produção da primeira tiragem de <span data-config="tiragem">50</span> cópias. O apoio é feito por Pix, direto ao criador, sem plataforma intermediária.</p></div>
           </details>
           <details>
-            <summary>O que acontece se a meta não for atingida?</summary>
-            <div><p>A campanha é de <strong>Meta Fixa</strong> (tudo ou nada). Se a meta não for atingida até o fim do prazo, todos os apoios são devolvidos aos apoiadores em até 5 dias úteis após o término da campanha, e o jogo não é produzido.</p></div>
+            <summary>Como faço para apoiar?</summary>
+            <div><p>Escolha um valor na seção <a href="#pix">Apoie com Pix</a>, pague pelo Pix copia e cola, pelo QR Code ou pela chave, e envie o comprovante pelo WhatsApp dizendo como quer aparecer na lista de apoiadores. Se apoiou com <span data-pix-offer-value>R$ 500</span> ou mais, informe também o endereço de entrega.</p></div>
           </details>
           <details>
-            <summary>Quando sou cobrado(a)?</summary>
-            <div><p>Você paga uma única vez. Pelas regras da MeepleStarter, o dinheiro só é repassado ao criador depois do fim da campanha e apenas se a meta for atingida. O momento da cobrança e as formas de pagamento serão informados na página da campanha.</p></div>
+            <summary>O que eu recebo?</summary>
+            <div><p>Com qualquer valor, seu nome (ou apelido) entra na lista de apoiadores deste site. A partir de <span data-pix-offer-value>R$ 500</span>, você também garante uma cópia do jogo, com frete à parte.</p></div>
           </details>
           <details>
-            <summary>Posso cancelar meu apoio?</summary>
-            <div><p>Sim, pedindo à MeepleStarter pelos canais de atendimento dela. Pelas regras atuais da plataforma, o pedido precisa ser feito até 48 horas úteis antes do fim da campanha e vale quando o seu apoio não for determinante para atingir a meta. Fora dessas condições, o reembolso é tratado diretamente com o criador depois do término. Confira os detalhes no <a href="https://meeplestarter.com.br/como-funciona" rel="noopener" target="_blank">Como funciona da MeepleStarter<span class="visually-hidden"> (abre em nova aba)</span></a>.</p></div>
+            <summary>E se a meta não for atingida?</summary>
+            <div><p>O jogo será produzido mesmo assim, com o valor arrecadado, e quem apoiou com <span data-pix-offer-value>R$ 500</span> ou mais recebe a sua cópia. Por isso não há devolução por meta não atingida.</p></div>
           </details>
-          <details data-config="pixChave" data-pix-faq hidden>
-            <summary>Posso contribuir por Pix, fora da MeepleStarter?</summary>
-            <div><p>Pode. A chave está na seção <a href="#pix">Como apoiar</a>. A contribuição por Pix é voluntária, vai direto para o criador e não dá direito a recompensa nem a uma cópia do jogo. Ela também não entra na contagem da meta na MeepleStarter. Se a meta da campanha não for atingida, o valor é devolvido integralmente. Para garantir sua cópia, apoie pela campanha.</p></div>
+          <details>
+            <summary>Como sei quanto já foi arrecadado?</summary>
+            <div><p>A barra de progresso mostra o total confirmado. Ela é atualizada manualmente pelo criador conforme os Pix chegam, então pode levar um tempo para refletir o seu apoio.</p></div>
+          </details>
+          <details>
+            <summary>Como meu nome aparece na lista?</summary>
+            <div><p>Do jeito que você pedir na mensagem do WhatsApp: nome, apelido ou nenhum, se preferir não aparecer.</p></div>
           </details>
           <details>
             <summary>Quando recebo o jogo?</summary>
-            <div><p data-config="previsaoEntrega" data-delivery-text>A previsão de entrega será informada na página da campanha.</p></div>
+            <div><p data-config="previsaoEntrega" data-delivery-text>A previsão de entrega será informada nesta página.</p></div>
           </details>
           <details>
-            <summary>Quem é responsável pela entrega?</summary>
-            <div><p>O criador do ME. A MeepleStarter recebe e repassa os apoios, mas não é responsável pela produção nem pela entrega das recompensas. Prazos, frete e condições de envio serão informados na página da campanha.</p></div>
+            <summary>Quanto custa o frete?</summary>
+            <div><p>O frete é cobrado à parte e combinado pelo WhatsApp, conforme o seu endereço. A produção e a entrega das cópias são responsabilidade do criador do ME.</p></div>
           </details>
           <details>
             <summary>Para quem é o jogo?</summary>
@@ -473,7 +518,7 @@
             <div><p>De <strong>4 a 8 jogadores</strong> no Modo Padrão e de <strong>4 a 6</strong> no Modo Alternativo. Uma partida leva de 45 a 60 minutos.</p></div>
           </details>
         </div>
-        <p class="faq-more">Mais dúvidas sobre a plataforma? Veja o <a href="https://meeplestarter.com.br/perguntas" rel="noopener" target="_blank">FAQ oficial da MeepleStarter<span class="visually-hidden"> (abre em nova aba)</span></a>.</p>
+        <p class="faq-more" data-contact-line-faq hidden>Ficou alguma dúvida? <a href="#" data-link="whatsapp-faq" target="_blank" rel="noopener">Fale pelo WhatsApp<span class="visually-hidden"> (abre em nova aba)</span></a>.</p>
       </div>
     </section>
 
@@ -482,10 +527,10 @@
       <div class="wrap narrow final-inner">
         <svg class="final-logo" aria-hidden="true"><use href="#logo-me"/></svg>
         <h2 id="final-title">Descubra quem realmente conhece quem.</h2>
-        <p data-final-text>Uma tiragem de <span data-config="tiragem">50</span> cópias. Se a meta não for batida, seu dinheiro volta.</p>
+        <p data-final-text>Uma tiragem de <span data-config="tiragem">50</span> cópias. Com <span data-pix-offer-value>R$ 500</span>, a sua está garantida.</p>
         <div class="cta-group center">
-          <a class="btn btn-primary btn-lg" href="#como-apoiar" data-cta="primary">Em breve na MeepleStarter</a>
-          <a class="btn btn-ghost on-dark" href="#" data-cta-secondary hidden></a>
+          <a class="btn btn-primary btn-lg" href="#pix" data-cta="primary">Apoiar com Pix</a>
+          <a class="btn btn-ghost on-dark" href="#recompensas" data-cta-secondary>Ver recompensas</a>
         </div>
         <div class="cast cast-final" aria-hidden="true">
           <img src="assets/img/personagens/triangulo.svg" alt="" width="42" height="122" loading="lazy">
@@ -508,7 +553,6 @@
         <p>ME é um jogo de tabuleiro para <strong>maiores de 18 anos</strong>.<br>Criado por Tibério, Ribeirão Preto (SP).<br>Design gráfico de Gleice Vieira: <a href="https://www.instagram.com/bivalve.br" target="_blank" rel="noopener">@bivalve.br<span class="visually-hidden"> no Instagram (abre em nova aba)</span></a>.</p>
       </div>
       <ul class="footer-links">
-        <li><a href="https://meeplestarter.com.br/" rel="noopener" target="_blank" data-footer-campaign>MeepleStarter<span class="visually-hidden"> (abre em nova aba)</span></a></li>
         <li data-config="instagram" hidden><a href="#" rel="noopener" target="_blank" data-link="instagram">Instagram<span class="visually-hidden"> (abre em nova aba)</span></a></li>
         <li data-config="whatsapp" hidden><a href="#" rel="noopener" target="_blank" data-link="whatsapp">WhatsApp<span class="visually-hidden"> (abre em nova aba)</span></a></li>
         <li data-config="email" hidden><a href="#" data-link="email">E-mail</a></li>
