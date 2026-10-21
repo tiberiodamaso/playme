@@ -177,6 +177,38 @@
     }
   }
 
+  // ---------- Contribuição direta por Pix ----------
+  function applyPix() {
+    var box = $("[data-pix]");
+    if (!box || !isStr(c.pixChave)) return;
+    var key = c.pixChave.trim();
+    $("[data-pix-key]", box).textContent = key;
+    box.hidden = false;
+    var faq = $("[data-pix-faq]");
+    if (faq) faq.hidden = false;
+    var headerBtn = $("[data-pix-header]");
+    if (headerBtn) headerBtn.hidden = false;
+
+    var btn = $("[data-pix-copy]", box), fb = $("[data-pix-feedback]", box);
+    btn.addEventListener("click", function () {
+      function done(ok) {
+        fb.textContent = ok ? "Chave copiada. Agora é só colar no app do seu banco." : "Não deu para copiar automaticamente. Selecione a chave acima e copie.";
+        if (ok) { btn.textContent = "Copiada!"; setTimeout(function () { btn.textContent = "Copiar chave"; }, 2500); }
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(key).then(function () { done(true); }, function () { done(false); });
+      } else {
+        var range = document.createRange();
+        range.selectNodeContents($("[data-pix-key]", box));
+        var sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(range);
+        var ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+        done(ok);
+      }
+    });
+  }
+
   // ---------- Progresso da meta ----------
   function applyProgress(state) {
     var showBar = (state === "ativa" || state === "encerrada") && isNum(c.metaReais) && isNum(c.arrecadadoReais);
@@ -397,6 +429,7 @@
 
   applyStatic();
   applyContacts();
+  applyPix();
   applyAll();
   initDemo();
   initReveal();

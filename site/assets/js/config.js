@@ -37,15 +37,15 @@ window.ME_CONFIG = {
 
   // Endereço completo da página da campanha na MeepleStarter.
   // ex.: "https://meeplestarter.com.br/slug-do-me"
-  campanhaUrl: null,
+  campanhaUrl: "https://meeplestarter.com.br/playme",
 
   // Data e hora de início da campanha (horário de Brasília).
   // ex.: "2027-03-01T10:00:00-03:00"
-  dataInicio: null,
+  dataInicio: "2026-11-03T10:00:00-03:00",
 
   // Data e hora de encerramento da campanha (horário de Brasília).
   // ex.: "2027-04-15T23:59:00-03:00"
-  dataFim: null,
+  dataFim: "2026-12-10T21:00:00-03:00",
 
   // Meta da campanha em reais (número inteiro, sem "R$").
   // ex.: 15000
@@ -74,6 +74,14 @@ window.ME_CONFIG = {
   // Número de apoiadores até agora. Copie da página da campanha.
   // ex.: 37
   apoiadores: null,
+
+  // --- Contribuição direta por Pix ---
+
+  // Chave Pix para contribuições voluntárias feitas direto ao criador, fora da
+  // MeepleStarter (sem recompensa; devolvidas se a meta não for atingida).
+  // Use null para esconder a opção do site.
+  // ex.: "51486162-fb79-4f2d-a3cb-6eaef5924947"
+  pixChave: "51486162-fb79-4f2d-a3cb-6eaef5924947",
 
   // --- Contato e redes (placeholders) ---
 

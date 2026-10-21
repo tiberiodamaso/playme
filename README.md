@@ -120,6 +120,18 @@ A barra de progresso só aparece com campanha ativa ou encerrada e com `metaReai
 
 ---
 
+### Contribuição direta por Pix
+
+O campo `pixChave` do `config.js` mostra, em "Como apoiar" e no FAQ, a opção de contribuir por Pix direto ao criador. Com `null`, a opção some do site. A opção aparece em todos os estados da campanha, e o site informa que:
+
+- é uma contribuição voluntária, sem recompensa nem cópia do jogo;
+- não conta para a meta na MeepleStarter;
+- é devolvida integralmente para a conta de origem se a meta não for atingida.
+
+Esse último item é um compromisso seu com quem contribuir: guarde o registro dos Pix recebidos para conseguir devolver.
+
+**Não coloque a chave Pix na página da campanha na MeepleStarter.** Os Termos de Uso Gerais da plataforma (seção 5) proíbem publicar lá dados de conta bancária e "links para pagamentos externos". No seu próprio site isso é permitido.
+
 ## Outros pontos editáveis no HTML
 
 Procure em `site/index.html` por:

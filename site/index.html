@@ -59,6 +59,7 @@
         <a href="#faq">Dúvidas</a>
       </nav>
       <span class="age-chip" aria-label="Para maiores de 18 anos">18+</span>
+      <a class="btn btn-pix btn-sm" href="#pix" data-config="pixChave" data-pix-header hidden><span><span class="hide-sm">Apoiar com </span>Pix</span></a>
       <a class="btn btn-primary btn-sm" href="#como-apoiar" data-cta="short">Em breve</a>
     </div>
   </header>
@@ -350,6 +351,23 @@
         </div>
 
         <p class="fineprint">A <span data-config="plataforma">MeepleStarter</span> é a plataforma que recebe os apoios e os repassa ao criador. A produção e a entrega das recompensas são responsabilidade do criador do ME, como em toda campanha da plataforma.</p>
+
+        <div class="pix-box" id="pix" data-config="pixChave" data-pix hidden>
+          <p class="pix-tag">Apoie com Pix</p>
+          <h3>Prefere contribuir direto, por Pix?</h3>
+          <p>Qualquer valor ajuda a levar o ME para a gráfica. É uma contribuição voluntária, feita diretamente ao criador, fora da MeepleStarter.</p>
+          <div class="pix-key">
+            <p class="pix-label" id="pix-label">Chave Pix</p>
+            <code data-pix-key aria-labelledby="pix-label"></code>
+            <button type="button" class="btn btn-primary btn-sm" data-pix-copy>Copiar chave</button>
+          </div>
+          <p class="pix-feedback" role="status" data-pix-feedback></p>
+          <ul class="pix-terms">
+            <li><strong>Não inclui recompensa nem cópia do jogo.</strong> Cópias e recompensas estão só na campanha da MeepleStarter.</li>
+            <li><strong>Não conta para a meta</strong> da campanha na MeepleStarter.</li>
+            <li><strong>Se a meta não for atingida, o valor é devolvido integralmente</strong> para a conta de origem.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -403,6 +421,10 @@
           <h2 id="autor-title">Feito por Tibério, em Ribeirão Preto.</h2>
           <!-- BIO: substitua os parágrafos abaixo pela sua bio. -->
           <p>O ME foi criado por Tibério, desenvolvedor independente de Ribeirão Preto (SP). O jogo foi desenhado para mesas de amigos que já não sabem mais o que perguntar uns aos outros.</p>
+          <p class="credit">O ME só foi possível graças ao trabalho profissional da designer gráfica <strong>Gleice Vieira</strong>.
+            <a class="ig-link" href="https://www.instagram.com/bivalve.br" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>@bivalve.br<span class="visually-hidden"> no Instagram (abre em nova aba)</span></a>
+          </p>
+          <p class="credit">E não poderiam ficar de fora os amigos que participaram das rodadas de playtest. Os palpites e sugestões deles, sempre com muitas risadas e críticas construtivas, ajudaram a tirar o projeto do papel.</p>
           <p class="author-contact" data-contact-line hidden>Quer falar comigo? <span data-contact-links></span></p>
         </div>
       </div>
@@ -429,6 +451,10 @@
           <details>
             <summary>Posso cancelar meu apoio?</summary>
             <div><p>Sim, pedindo à MeepleStarter pelos canais de atendimento dela. Pelas regras atuais da plataforma, o pedido precisa ser feito até 48 horas úteis antes do fim da campanha e vale quando o seu apoio não for determinante para atingir a meta. Fora dessas condições, o reembolso é tratado diretamente com o criador depois do término. Confira os detalhes no <a href="https://meeplestarter.com.br/como-funciona" rel="noopener" target="_blank">Como funciona da MeepleStarter<span class="visually-hidden"> (abre em nova aba)</span></a>.</p></div>
+          </details>
+          <details data-config="pixChave" data-pix-faq hidden>
+            <summary>Posso contribuir por Pix, fora da MeepleStarter?</summary>
+            <div><p>Pode. A chave está na seção <a href="#pix">Como apoiar</a>. A contribuição por Pix é voluntária, vai direto para o criador e não dá direito a recompensa nem a uma cópia do jogo. Ela também não entra na contagem da meta na MeepleStarter. Se a meta da campanha não for atingida, o valor é devolvido integralmente. Para garantir sua cópia, apoie pela campanha.</p></div>
           </details>
           <details>
             <summary>Quando recebo o jogo?</summary>
@@ -479,7 +505,7 @@
     <div class="wrap footer-inner">
       <div>
         <svg class="footer-logo" aria-hidden="true"><use href="#logo-me"/></svg>
-        <p>ME é um jogo de tabuleiro para <strong>maiores de 18 anos</strong>.<br>Criado por Tibério, Ribeirão Preto (SP).</p>
+        <p>ME é um jogo de tabuleiro para <strong>maiores de 18 anos</strong>.<br>Criado por Tibério, Ribeirão Preto (SP).<br>Design gráfico de Gleice Vieira: <a href="https://www.instagram.com/bivalve.br" target="_blank" rel="noopener">@bivalve.br<span class="visually-hidden"> no Instagram (abre em nova aba)</span></a>.</p>
       </div>
       <ul class="footer-links">
         <li><a href="https://meeplestarter.com.br/" rel="noopener" target="_blank" data-footer-campaign>MeepleStarter<span class="visually-hidden"> (abre em nova aba)</span></a></li>
