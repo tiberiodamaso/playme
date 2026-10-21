@@ -23,10 +23,12 @@ docs/                    material confidencial, ignorado pelo git (nunca publica
 ## Rodar localmente
 
 ```bash
-python3 -m http.server 8000 --directory site
+python3 -m http.server 8000 --directory site --bind 127.0.0.1
 ```
 
 Abra http://localhost:8000.
+
+Rode o comando da raiz do repositório e não esqueça o `--directory site`. Sem ele, o servidor mostra uma lista de pastas em vez do site e expõe `docs/` e `.git/`. O `--bind 127.0.0.1` deixa o site acessível só no seu computador, e não para a rede Wi-Fi.
 
 ## Publicar no GitHub Pages
 
