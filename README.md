@@ -92,7 +92,7 @@ Documentação: [Verificar seu domínio personalizado para o GitHub Pages](https
 
 Todos os dados ficam em **`assets/js/config.js`**. Campo desconhecido continua `null`, e o site esconde o que é `null`. Valores em reais são números sem "R$" e sem ponto (`25000`). Datas usam o formato `"2026-12-10T21:00:00-03:00"` (horário de Brasília).
 
-A campanha não usa plataforma: os apoios são feitos por Pix, direto para você, e o site muda sozinho de estado pela data e hora de quem visita:
+Os apoios são feitos por Pix, direto para você, e o site muda sozinho de estado pela data e hora de quem visita:
 
 | Estado | Quando | O que o visitante vê |
 |---|---|---|
