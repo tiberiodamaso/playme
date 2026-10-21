@@ -5,16 +5,15 @@ Site estático (HTML, CSS e JavaScript puros, sem build) que apresenta o jogo de
 Endereço: **https://playme.app.br**
 
 ```
-site/                    ← tudo que vai ao ar (e só isso)
-  index.html             página única
-  404.html
-  CNAME  robots.txt  sitemap.xml
-  assets/js/config.js    ← ÚNICO arquivo a editar para atualizar a campanha
-  assets/js/main.js      lógica dos estados, barra de meta, Pix e demo
-  assets/css/style.css
-  assets/img/            personagens, caixa, peões, tabuleiro, og-me.png, favicon
-  assets/fonts/          Montserrat (hospedada aqui, sem Google Fonts)
-.github/workflows/pages.yml   publica somente /site
+index.html               página única (na raiz: o GitHub Pages publica a raiz da branch main)
+404.html
+robots.txt  sitemap.xml  .nojekyll
+assets/js/config.js      ← ÚNICO arquivo a editar para atualizar a campanha
+assets/js/main.js        lógica dos estados, barra de meta, Pix e demo
+assets/css/style.css
+assets/img/              personagens, caixa, peões, tabuleiro, og-me.png, favicon
+assets/fonts/            Montserrat (hospedada aqui, sem Google Fonts)
+.github/workflows/pages.yml   só verifica que nada confidencial foi versionado
 docs/                    material confidencial, ignorado pelo git (nunca publicar)
 ```
 
@@ -22,26 +21,34 @@ docs/                    material confidencial, ignorado pelo git (nunca publica
 
 ## Rodar localmente
 
+Na raiz do repositório:
+
 ```bash
-python3 -m http.server 8000 --directory site --bind 127.0.0.1
+python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Abra http://localhost:8000.
-
-Rode o comando da raiz do repositório e não esqueça o `--directory site`. Sem ele, o servidor mostra uma lista de pastas em vez do site e expõe `docs/` e `.git/`. O `--bind 127.0.0.1` deixa o site acessível só no seu computador, e não para a rede Wi-Fi.
+Abra http://localhost:8000. O `--bind 127.0.0.1` é importante: como o servidor serve a raiz, ele também enxerga `docs/` e `.git/`, e assim fica acessível só no seu computador, não para a rede Wi-Fi.
 
 ## Publicar no GitHub Pages
 
-O site é publicado pelo **GitHub Actions**, a partir da pasta `/site`. Só o que está em `/site` vai ao ar: README, `.github` e principalmente `docs/` ficam de fora, mesmo que algo entre no repositório por engano. O workflow também falha de propósito se encontrar arquivos de `docs/` versionados ou links para `docs/` no site.
+O site é publicado direto da branch `main`, pasta raiz. Tudo o que estiver versionado na raiz vai ao ar. Por isso `docs/` fica no `.gitignore` e nunca deve ser versionado; o workflow `.github/workflows/pages.yml` falha se algum arquivo de `docs/` entrar no repositório.
 
-1. Faça o push do repositório para o GitHub (branch `main`).
-2. No repositório: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-   - Não escolha "Deploy from a branch" e **nunca** selecione a pasta `/docs`.
-3. Ainda em **Settings → Pages → Custom domain**, digite `playme.app.br` e salve.
-   - Com o deploy via Actions, o GitHub não lê o arquivo `site/CNAME`. O domínio vale pelo que estiver configurado nessa tela. O arquivo fica no repositório só como registro.
-4. Quando o certificado for emitido (pode levar até 24 h depois do DNS propagar), marque **Enforce HTTPS**.
+1. No repositório: **Settings → Pages → Build and deployment → Source: Deploy from a branch**.
+2. Escolha **Branch: `main`** e pasta **`/ (root)`**, e salve.
+   - **Nunca** escolha a pasta `/docs`.
+3. Em 1 ou 2 minutos o site aparece em https://tiberiodamaso.github.io/playme/.
 
-Cada push em `main` que altere `site/` publica de novo automaticamente. Para publicar manualmente: **Actions → Publicar site no GitHub Pages → Run workflow**.
+Cada push em `main` publica de novo automaticamente.
+
+O arquivo `.nojekyll` faz o GitHub servir os arquivos como estão, sem passar pelo Jekyll (que transformaria o README em página).
+
+### Domínio playme.app.br (quando o DNS estiver pronto)
+
+Não configure o domínio antes de cadastrar o DNS: o GitHub passaria a redirecionar para um endereço que ainda não abre.
+
+1. Cadastre o DNS no Registro.br (abaixo) e espere propagar.
+2. Em **Settings → Pages → Custom domain**, digite `playme.app.br` e salve. O GitHub cria sozinho o arquivo `CNAME` na raiz da branch (faça `git pull` depois).
+3. Quando o certificado for emitido (pode levar até 24 h), marque **Enforce HTTPS**.
 
 ## DNS no Registro.br
 
@@ -83,7 +90,7 @@ Documentação: [Verificar seu domínio personalizado para o GitHub Pages](https
 
 ## A campanha (por Pix, direto com o criador)
 
-Todos os dados ficam em **`site/assets/js/config.js`**. Campo desconhecido continua `null`, e o site esconde o que é `null`. Valores em reais são números sem "R$" e sem ponto (`25000`). Datas usam o formato `"2026-12-10T21:00:00-03:00"` (horário de Brasília).
+Todos os dados ficam em **`assets/js/config.js`**. Campo desconhecido continua `null`, e o site esconde o que é `null`. Valores em reais são números sem "R$" e sem ponto (`25000`). Datas usam o formato `"2026-12-10T21:00:00-03:00"` (horário de Brasília).
 
 A campanha não usa plataforma: os apoios são feitos por Pix, direto para você, e o site muda sozinho de estado pela data e hora de quem visita:
 
@@ -121,7 +128,7 @@ arrecadadoAtualizadoEm: "25/11/2026",
 listaApoiadores: ["Ana Souza", "Bia", "Carlos M."],   // só quem autorizou
 ```
 
-Depois, commit e push em `main`. O Actions publica em cerca de 1 minuto. Pelo próprio GitHub dá para editar no navegador: abra o arquivo, clique no lápis e depois em "Commit changes".
+Depois, commit e push em `main`. O GitHub Pages publica em 1 ou 2 minutos. Pelo próprio GitHub dá para editar no navegador: abra o arquivo, clique no lápis e depois em "Commit changes".
 
 Enquanto `arrecadadoReais` for `null`, a barra aparece vazia com "Meta: R$ 25.000 para produzir 50 cópias. Seja a primeira pessoa a apoiar!". Acima de 100%, a barra fica cheia e o percentual real aparece no texto.
 
@@ -134,9 +141,9 @@ Enquanto `arrecadadoReais` for `null`, a barra aparece vazia com "Meta: R$ 25.00
 
 ## Outros pontos editáveis no HTML
 
-Procure em `site/index.html` por:
+Procure em `index.html` por:
 
-- **`<!-- FOTO:`**: troque o personagem pela sua foto (salve em `site/assets/img/`, de preferência WebP, quadrada, com uns 480 px).
+- **`<!-- FOTO:`**: troque o personagem pela sua foto (salve em `assets/img/`, de preferência WebP, quadrada, com uns 480 px).
 - **`<!-- BIO:`**: sua biografia em "Quem fez".
 - **`id="depoimentos"`**: seção de relatos de playtests, oculta. Preencha com relatos reais e remova o atributo `hidden`.
 

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página não encontrada · ME</title>
+  <meta name="robots" content="noindex">
+  <style>
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh; display: grid; place-items: center; text-align: center;
+      background: #232B2C; color: #F1F0EC; padding: 24px 16px; box-sizing: border-box;
+      font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0 0 .4em; line-height: 1.15; }
+    p { color: #C3C7C6; font-size: 1.1rem; margin: 0 0 28px; }
+    a {
+      display: inline-block; padding: 14px 28px; border-radius: 999px;
+      background: #FDC125; color: #232B2C; font-weight: 700; text-decoration: none;
+    }
+    a:focus-visible { outline: 3px solid #4782FF; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Essa página não existe.</h1>
+    <p>Nem a mesa inteira conseguiu adivinhar o que você procurava.</p>
+    <a href="/" id="home">Voltar para o ME</a>
+  </main>
+  <script>
+    // Funciona tanto em tiberiodamaso.github.io/playme/ quanto em playme.app.br/
+    if (location.pathname.indexOf("/playme/") === 0) document.getElementById("home").setAttribute("href", "/playme/");
+  </script>
+</body>
+</html>
