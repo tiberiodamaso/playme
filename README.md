@@ -102,8 +102,8 @@ Os apoios são feitos por Pix, direto para você, e o site muda sozinho de estad
 ### Regras que o site comunica
 
 - **Qualquer valor:** o nome da pessoa entra na lista de apoiadores do site, como nome e sobrenome ou primeiro nome com a inicial do sobrenome (ex.: "Ana S."), ou ela pode não aparecer. Apelidos, frases, nomes de empresas, links e conteúdo ofensivo não são publicados; revise cada nome antes de incluir.
-- **A partir de `pixValorCopia` (hoje R$ 500):** uma cópia do jogo e o nome na lista. O frete é cobrado à parte e combinado pelo WhatsApp.
-- **Depois do Pix:** a pessoa envia o comprovante pelo WhatsApp (campo `whatsapp`), com nome e sobrenome para a lista e, se for o caso, o endereço de entrega. O botão do site abre a conversa com a mensagem pronta.
+- **A partir de `pixValorCopia` (hoje R$ 500):** uma cópia do jogo e o nome na lista. O frete é cobrado à parte e combinado por e-mail.
+- **Depois do Pix:** a pessoa envia o comprovante por e-mail (campo `email`), com nome e sobrenome para a lista e, se for o caso, o endereço de entrega. O botão do site abre o app de e-mail com assunto e mensagem prontos; a pessoa só precisa anexar o comprovante.
 - **Se a meta não for atingida:** o jogo é produzido mesmo assim, com o valor arrecadado, e não há devolução por meta não atingida.
 
 Esses são compromissos seus com quem apoia: guarde o registro de cada Pix, do nome pedido e do endereço de quem tem direito à cópia.
@@ -137,7 +137,7 @@ Enquanto `arrecadadoReais` for `null`, a barra aparece vazia com "Meta: R$ 25.00
 - `dataFim`: fim da campanha (hoje 10/12/2026, 21h).
 - `metaReais`: meta (hoje R$ 25.000).
 - `previsaoEntrega`: aparece no FAQ "Quando recebo o jogo?".
-- `whatsapp`, `instagram`, `email`: os links aparecem no rodapé e em "Quem fez".
+- `email`, `instagram`: os links aparecem no rodapé, no FAQ e em "Quem fez". O `email` também recebe os comprovantes.
 
 ## Outros pontos editáveis no HTML
 

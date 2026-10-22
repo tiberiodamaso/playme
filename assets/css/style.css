@@ -471,7 +471,8 @@ a:hover { text-decoration-thickness: 2px; }
 .pix-step .pix-copy-note { margin-top: 10px; border-left-color: var(--ink); }
 .pix-step .pix-key { margin-top: 10px; }
 .pix-step .pix-code + .pix-suggest + .pix-key { margin-top: 10px; }
-.pix-whats-line { margin: 0; }
+.pix-send-line { margin: 0; display: grid; gap: 8px; justify-items: start; }
+.pix-send-addr { font-size: .9rem; }
 .pix-small { margin: 18px 0 0; font-size: .88rem; }
 .pix-key {
   display: grid; gap: 10px; align-items: center;
@@ -511,8 +512,7 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .pix-copy-note p { margin: 0 0 8px; }
 .pix-copy-note p:last-child { margin: 0; }
-.pix-whats { white-space: normal; text-align: left; }
-.pix-terms .pix-whats { margin-top: 8px; }
+.pix-send { white-space: normal; text-align: left; }
 @media (min-width: 720px) { .pix-amount-grid { grid-template-columns: repeat(6, 1fr); max-width: none; } }
 
 .pix-code {

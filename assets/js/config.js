@@ -85,16 +85,12 @@ window.ME_CONFIG = {
 
   // --- Contato e redes ---
 
-  // Número do WhatsApp com DDI e DDD, só dígitos. Recebe os comprovantes,
-  // os nomes para a lista e os endereços de entrega.
-  // ex.: "5516999999999"
-  whatsapp: "5516981000167",
-
   // Endereço completo do perfil do Instagram.
   // ex.: "https://www.instagram.com/playme.app"
   instagram: null,
 
-  // E-mail de contato.
+  // E-mail de contato. Recebe os comprovantes do Pix, os nomes para a lista
+  // de apoiadores e os endereços de entrega.
   // ex.: "contato@playme.app.br"
-  email: null
+  email: "tiberio@gmail.com"
 };

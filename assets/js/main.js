@@ -41,8 +41,7 @@
   }
 
   var instagramUrl = isUrl(c.instagram) ? c.instagram.trim() : null;
-  var whatsDigits = isStr(c.whatsapp) ? c.whatsapp.replace(/\D/g, "") : "";
-  if (whatsDigits.length < 10) whatsDigits = "";
+  var emailAddr = isStr(c.email) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email.trim()) ? c.email.trim() : "";
   var hasPix = isStr(c.pixChave);
   var copyMin = isNum(c.pixValorCopia) ? c.pixValorCopia : null;
   var tiragem = isNum(c.tiragem) ? int(c.tiragem) : "50";
@@ -101,7 +100,7 @@
 
     var delivery = $("[data-delivery-text]");
     if (delivery && isStr(c.previsaoEntrega)) {
-      delivery.textContent = "A previsão de entrega é " + c.previsaoEntrega.trim() + ". O frete é combinado pelo WhatsApp, conforme o seu endereço.";
+      delivery.textContent = "A previsão de entrega é " + c.previsaoEntrega.trim() + ". O frete é combinado por e-mail, conforme o seu endereço.";
     }
   }
 
@@ -109,16 +108,15 @@
   function applyContacts() {
     var links = [];
     if (instagramUrl) links.push({ key: "instagram", label: "Instagram", href: instagramUrl, ext: true });
-    if (whatsDigits) links.push({ key: "whatsapp", label: "WhatsApp", href: "https://wa.me/" + whatsDigits, ext: true });
-    if (isStr(c.email) && /@/.test(c.email)) links.push({ key: "email", label: "E-mail", href: "mailto:" + c.email.trim(), ext: false });
+    if (emailAddr) links.push({ key: "email", label: emailAddr, href: "mailto:" + emailAddr, ext: false });
 
     links.forEach(function (l) {
       var a = $('[data-link="' + l.key + '"]');
-      if (a) { a.setAttribute("href", l.href); a.parentElement.hidden = false; }
+      if (a) { a.setAttribute("href", l.href); a.textContent = l.label; a.parentElement.hidden = false; }
     });
-    if (whatsDigits) {
-      var fa = $('[data-link="whatsapp-faq"]');
-      if (fa) { fa.setAttribute("href", "https://wa.me/" + whatsDigits); $("[data-contact-line-faq]").hidden = false; }
+    if (emailAddr) {
+      var fa = $('[data-link="email-faq"]');
+      if (fa) { fa.setAttribute("href", "mailto:" + emailAddr); fa.textContent = emailAddr; $("[data-contact-line-faq]").hidden = false; }
     }
 
     var line = $("[data-contact-line]"), holder = $("[data-contact-links]");
@@ -206,20 +204,21 @@
     }
   }
 
-  // Botão de WhatsApp com a mensagem pronta para enviar o comprovante.
-  function fillWhats(holder, amount) {
+  // Botão de e-mail com assunto e mensagem prontos para enviar o comprovante.
+  function fillSend(holder, amount) {
     if (!holder) return;
     holder.replaceChildren();
-    if (whatsDigits) {
+    if (emailAddr) {
       var withCopy = copyMin && (!amount || amount >= copyMin);
-      var msg = "Olá! Fiz um Pix" + (amount ? " de " + brl(amount) : "") + " para apoiar o ME. Segue o comprovante.\n" +
+      var msg = "Olá! Fiz um Pix" + (amount ? " de " + brl(amount) : "") + " para apoiar o ME. O comprovante está em anexo.\n\n" +
         "Nome e sobrenome para a lista de apoiadores (ou \"não quero aparecer\"): \n" +
         (withCopy ? "Endereço para envio da cópia" + (amount ? "" : " (se apoiei com " + brl(copyMin) + " ou mais)") + ": " : "");
-      var a = el("a", { "class": "btn btn-primary btn-sm pix-whats", href: "https://wa.me/" + whatsDigits + "?text=" + encodeURIComponent(msg), target: "_blank", rel: "noopener" }, "Enviar comprovante pelo WhatsApp");
-      a.appendChild(el("span", { "class": "visually-hidden" }, " (abre em nova aba)"));
+      var subject = "Apoio ao ME" + (amount ? " - Pix de " + brl(amount) : " - comprovante do Pix");
+      var a = el("a", { "class": "btn btn-primary btn-sm pix-send", href: "mailto:" + emailAddr + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(msg) }, "Enviar comprovante por e\u2011mail");
       holder.appendChild(a);
+      holder.appendChild(el("span", { "class": "pix-send-addr" }, "ou escreva para " + emailAddr + ", com o comprovante em anexo."));
     } else {
-      holder.textContent = "Guarde o comprovante do Pix: o WhatsApp para enviá-lo será publicado nesta página.";
+      holder.textContent = "Guarde o comprovante do Pix: o e-mail para enviá-lo será publicado nesta página.";
     }
   }
 
@@ -235,8 +234,8 @@
         $$(s, box).forEach(function (e) { e.hidden = false; });
       });
     }
-    var whatsMain = $("[data-pix-whats-main]", box);
-    fillWhats(whatsMain, null);
+    var sendLine = $("[data-pix-send]", box);
+    fillSend(sendLine, null);
 
     var fb = $("[data-pix-feedback]", box);
 
@@ -275,7 +274,7 @@
           el("strong", null, brl(v) + ": "),
           document.createTextNode(withCopy ? "uma cópia do ME e seu nome na lista de apoiadores. Frete à parte." : "seu nome na lista de apoiadores deste site."));
         note.hidden = false;
-        fillWhats(whatsMain, v);
+        fillSend(sendLine, v);
         if (canCode) {
           current = pixPayload(key, v, name, city);
           codeText.textContent = current;
