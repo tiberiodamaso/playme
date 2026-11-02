@@ -44,7 +44,7 @@
   var emailAddr = isStr(c.email) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email.trim()) ? c.email.trim() : "";
   var hasPix = isStr(c.pixChave);
   var copyMin = isNum(c.pixValorCopia) ? c.pixValorCopia : null;
-  var tiragem = isNum(c.tiragem) ? int(c.tiragem) : "50";
+  var tiragem = isNum(c.tiragem) ? int(c.tiragem) : "100";
 
   // ---------- Estado da campanha ----------
   // A campanha é por Pix e está aberta até dataFim. Depois disso, "encerrada".
@@ -62,7 +62,7 @@
       };
     }
     return {
-      primary: hasPix ? { text: "Apoiar com Pix", href: "#pix" } : { text: "Como apoiar", href: "#como-apoiar" },
+      primary: hasPix ? { text: "ME apoie", href: "#pix" } : { text: "Como apoiar", href: "#como-apoiar" },
       secondary: { text: "Experimente o jogo", href: "#experimente" },
       note: copyMin ? "A partir de " + brl(copyMin) + ", uma cópia do jogo é sua." : "Qualquer valor ajuda a levar o ME para a gráfica."
     };
@@ -83,6 +83,7 @@
     var pixOpen = hasPix && state !== "encerrada";
     ["[data-pix]", "[data-pix-header]"].forEach(function (s) { $$(s).forEach(function (e) { e.hidden = !pixOpen; }); });
     $$("[data-reward-pix]").forEach(function (e) { e.hidden = !pixOpen; });
+    $$("[data-share], [data-video-share]").forEach(function (e) { e.hidden = state === "encerrada"; });
     document.documentElement.setAttribute("data-campaign-state", state);
   }
 
@@ -100,35 +101,31 @@
 
     var delivery = $("[data-delivery-text]");
     if (delivery && isStr(c.previsaoEntrega)) {
-      delivery.textContent = "A previsão de entrega é " + c.previsaoEntrega.trim() + ". O frete é combinado por e-mail, conforme o seu endereço.";
+      delivery.textContent = "Previsão de entrega: " + c.previsaoEntrega.trim() + ". É uma estimativa: o prazo depende muito da velocidade com que a meta for atingida. Quem apoiar recebe as atualizações por e-mail.";
     }
+    $$("[data-delivery-tier]").forEach(function (s) {
+      if (!isStr(c.previsaoEntrega)) return;
+      s.textContent = " Previsão de entrega: " + c.previsaoEntrega.trim() + " (estimativa).";
+      s.hidden = false;
+    });
   }
 
   // ---------- Contato e redes ----------
   function applyContacts() {
     var links = [];
-    if (instagramUrl) links.push({ key: "instagram", label: "Instagram", href: instagramUrl, ext: true });
-    if (emailAddr) links.push({ key: "email", label: emailAddr, href: "mailto:" + emailAddr, ext: false });
+    if (instagramUrl) links.push({ key: "instagram", label: "Instagram", href: instagramUrl });
+    if (emailAddr) links.push({ key: "email", label: emailAddr, href: "mailto:" + emailAddr });
 
     links.forEach(function (l) {
       var a = $('[data-link="' + l.key + '"]');
       if (a) { a.setAttribute("href", l.href); a.textContent = l.label; a.parentElement.hidden = false; }
     });
     if (emailAddr) {
+      $$("[data-email-link]").forEach(function (a) { a.setAttribute("href", "mailto:" + emailAddr); a.textContent = emailAddr; });
       var fa = $('[data-link="email-faq"]');
       if (fa) { fa.setAttribute("href", "mailto:" + emailAddr); fa.textContent = emailAddr; $("[data-contact-line-faq]").hidden = false; }
     }
 
-    var line = $("[data-contact-line]"), holder = $("[data-contact-links]");
-    if (line && holder && links.length) {
-      links.forEach(function (l, i) {
-        if (i) holder.appendChild(document.createTextNode(" · "));
-        var a = el("a", { href: l.href }, l.label);
-        if (l.ext) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); a.appendChild(el("span", { "class": "visually-hidden" }, " (abre em nova aba)")); }
-        holder.appendChild(a);
-      });
-      line.hidden = false;
-    }
   }
 
   // ---------- Pix ----------
@@ -174,6 +171,9 @@
       var ns = "http://www.w3.org/2000/svg";
       var svg = document.createElementNS(ns, "svg");
       svg.setAttribute("viewBox", "0 0 " + (n + 2 * m) + " " + (n + 2 * m));
+      // 4 px inteiros por módulo: bordas nítidas e leitura mais confiável pela câmera.
+      svg.setAttribute("width", String((n + 2 * m) * 4));
+      svg.setAttribute("height", String((n + 2 * m) * 4));
       svg.setAttribute("role", "img");
       svg.setAttribute("aria-label", label);
       svg.setAttribute("shape-rendering", "crispEdges");
@@ -212,7 +212,8 @@
       var withCopy = copyMin && (!amount || amount >= copyMin);
       var msg = "Olá! Fiz um Pix" + (amount ? " de " + brl(amount) : "") + " para apoiar o ME. O comprovante está em anexo.\n\n" +
         "Nome e sobrenome para a lista de apoiadores (ou \"não quero aparecer\"): \n" +
-        (withCopy ? "Endereço para envio da cópia" + (amount ? "" : " (se apoiei com " + brl(copyMin) + " ou mais)") + ": " : "");
+        (withCopy ? "\nEndereço completo para o cálculo do frete e o envio da cópia" + (amount ? "" : " (se apoiei com " + brl(copyMin) + " ou mais)") + ":\n" +
+          "Nome completo de quem vai receber: \nRua e número: \nComplemento: \nBairro: \nCidade e estado: \nCEP: \n" : "");
       var subject = "Apoio ao ME" + (amount ? " - Pix de " + brl(amount) : " - comprovante do Pix");
       var a = el("a", { "class": "btn btn-primary btn-sm pix-send", href: "mailto:" + emailAddr + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(msg) }, "Enviar comprovante por e\u2011mail");
       holder.appendChild(a);
@@ -225,9 +226,14 @@
   function applyPix() {
     var box = $("[data-pix]");
     if (!box || !hasPix) return;
-    var key = c.pixChave.trim();
+    // CNPJ/CPF podem vir com pontuação: mostra como está, copia só os números.
+    var keyDisplay = c.pixChave.trim();
+    var isDoc = /^[\d.\-\/\s]+$/.test(keyDisplay);
+    var key = isDoc ? keyDisplay.replace(/\D/g, "") : keyDisplay;
+    var docType = isDoc ? (key.length === 14 ? "CNPJ" : key.length === 11 ? "CPF" : "") : "";
     var keyNode = $("[data-pix-key]", box);
-    keyNode.textContent = key;
+    keyNode.textContent = keyDisplay;
+    if (docType) $("[data-pix-key-label]", box).textContent = "Chave Pix (" + docType + ")";
 
     if (copyMin) {
       ["[data-pix-offer]", "[data-pix-term-copy]", "[data-pix-term-below]", "[data-pix-term-address]"].forEach(function (s) {
@@ -261,7 +267,7 @@
     var note = $("[data-pix-copy-note]", box);
     var current = "";
 
-    if (canCode) $("[data-pix-key-label]", box).textContent = "Ou use a chave Pix e escolha outro valor";
+    if (canCode) $("[data-pix-key-label]", box).textContent = "Ou use a chave Pix" + (docType ? " (" + docType + ")" : "") + " e escolha outro valor";
 
     values.forEach(function (v) {
       var b = el("button", { type: "button", "class": "pix-amount", "aria-pressed": "false", "data-value": String(v) }, brl(v));
@@ -301,6 +307,109 @@
         if (target) target.click();
       });
     });
+  }
+
+  // ---------- Compartilhe ----------
+  function shareUrl() {
+    if (isUrl(c.urlCompartilhar)) return c.urlCompartilhar.trim();
+    return location.origin + location.pathname.replace(/index\.html$/, "");
+  }
+  function initShare() {
+    var box = $("[data-share]");
+    if (!box) return;
+    var url = shareUrl();
+    var copiaTxt = copyMin ? " Com " + brl(copyMin) + " você garante a sua." : "";
+    var MSG = {
+      apoiei: "Acabei de apoiar o ME, um jogo de tabuleiro (18+) em que você só avança se souber como seus amigos responderiam. A primeira tiragem tem só " + tiragem + " cópias e depende de apoio para sair do papel. Bora fazer esse jogo existir?",
+      convite: "ME conhece? É um jogo de tabuleiro (18+) que testa o quanto você e seus amigos realmente se conhecem. A primeira tiragem tem só " + tiragem + " cópias e está sendo financiada por Pix." + copiaTxt + " Dá uma olhada e ajuda a espalhar:"
+    };
+    var textNode = $("[data-share-text]", box), fb = $("[data-share-feedback]", box), urlNode = $("[data-share-url]", box);
+    urlNode.textContent = url;
+    var current = "apoiei";
+
+    function full() { return MSG[current] + " " + url; }
+    function render() {
+      textNode.textContent = full();
+      var m = encodeURIComponent(MSG[current]), u = encodeURIComponent(url);
+      var links = {
+        whatsapp: "https://wa.me/?text=" + encodeURIComponent(full()),
+        telegram: "https://t.me/share/url?url=" + u + "&text=" + m,
+        facebook: "https://www.facebook.com/sharer/sharer.php?u=" + u,
+        x: "https://twitter.com/intent/tweet?text=" + m + "&url=" + u
+      };
+      Object.keys(links).forEach(function (k) { var a = $('[data-share-link="' + k + '"]', box); if (a) a.setAttribute("href", links[k]); });
+      $$("[data-share-kind]", box).forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-share-kind") === current ? "true" : "false"); });
+    }
+    $$("[data-share-kind]", box).forEach(function (b) {
+      b.addEventListener("click", function () { current = b.getAttribute("data-share-kind"); fb.textContent = ""; render(); });
+    });
+
+    var nativeBtn = $("[data-share-native]", box);
+    if (navigator.share) {
+      nativeBtn.hidden = false;
+      nativeBtn.addEventListener("click", function () {
+        navigator.share({ title: "ME · jogo de tabuleiro", text: MSG[current], url: url }).catch(function () {});
+      });
+    }
+    $$("[data-share-copy]", box).forEach(function (b) {
+      var isUrlBtn = b.getAttribute("data-share-copy") === "url", idle = b.textContent;
+      b.addEventListener("click", function () {
+        copyText(isUrlBtn ? url : full(), isUrlBtn ? urlNode : textNode, b, idle, fb,
+          isUrlBtn ? "Link copiado. Cole onde quiser." : "Mensagem copiada. Cole no grupo ou na rede que preferir.");
+      });
+    });
+    render();
+  }
+
+  // ---------- Vídeo ----------
+  // O link leva à página já na seção do vídeo, com a campanha logo abaixo.
+  function initVideoShare() {
+    var box = $("[data-video-share]");
+    if (!box) return;
+    var url = shareUrl().replace(/#.*$/, "") + "#video";
+    var msg = "ME conhece? Olha esse vídeo do ME, um jogo de tabuleiro (18+) que testa o quanto você e seus amigos realmente se conhecem. A primeira tiragem tem só " + tiragem + " cópias e está sendo financiada por Pix. Assiste e ajuda a espalhar: " + url;
+    var urlNode = $("[data-video-url]", box), fb = $("[data-video-feedback]", box), btn = $("[data-video-copy]", box);
+    urlNode.textContent = url;
+    $('[data-video-link="whatsapp"]', box).setAttribute("href", "https://wa.me/?text=" + encodeURIComponent(msg));
+    var idle = btn.textContent;
+    btn.addEventListener("click", function () {
+      copyText(url, urlNode, btn, idle, fb, "Link do vídeo copiado. Cole onde quiser.");
+    });
+  }
+
+  // A troca entre horizontal e vertical é feita pelo CSS. A capa só é carregada
+  // quando a seção se aproxima da tela, e só a do formato visível, para não
+  // disputar banda com a abertura. Se a tela mudar com um vídeo tocando (ao
+  // girar o celular, por exemplo), o que ficou oculto é pausado e o visível
+  // continua do mesmo ponto.
+  function initVideo() {
+    var vids = $$("[data-video]"), frame = $(".video-frame"), near = false;
+    if (!vids.length || !frame) return;
+    function posters() {
+      if (!near) return;
+      vids.forEach(function (v) { if (v.offsetParent && !v.getAttribute("poster")) v.setAttribute("poster", v.getAttribute("data-poster")); });
+    }
+    function sync() {
+      var playing = vids.filter(function (v) { return !v.paused && !v.ended; })[0];
+      if (!playing || playing.offsetParent || document.fullscreenElement === playing || playing.webkitDisplayingFullscreen) return;
+      var shown = vids.filter(function (v) { return v.offsetParent; })[0], t = playing.currentTime;
+      playing.pause();
+      if (!shown) return;
+      // Com preload="none", o tempo só pode ser definido depois de carregar os metadados
+      if (shown.readyState >= 1) shown.currentTime = t;
+      else shown.addEventListener("loadedmetadata", function () { shown.currentTime = t; }, { once: true });
+      shown.play().catch(function () {});
+    }
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        near = true; posters(); io.disconnect();
+      }, { rootMargin: "600px 0px" });
+      io.observe(frame);
+    } else { near = true; posters(); }
+    window.addEventListener("resize", function () { posters(); sync(); });
+    document.addEventListener("fullscreenchange", sync);
+    vids.forEach(function (v) { v.addEventListener("webkitendfullscreen", sync); });
   }
 
   // ---------- Barra de meta ----------
@@ -479,7 +588,7 @@
       box.appendChild(el("p", null, msg));
       box.appendChild(el("p", null, "No ME são 180 perguntas, e a pessoa do outro lado da mesa é real."));
       var g = el("div", { "class": "cta-group" });
-      var a = el("a", { "class": "btn btn-primary", "data-cta": "primary", href: "#pix" }, "Apoiar com Pix");
+      var a = el("a", { "class": "btn btn-primary", "data-cta": "primary", href: "#pix" }, "ME apoie");
       g.appendChild(a);
       box.appendChild(g);
       var again = el("button", { type: "button", "class": "dq-restart" }, "Jogar de novo");
@@ -508,6 +617,9 @@
   applyContacts();
   applyPix();
   applyBackers();
+  initShare();
+  initVideoShare();
+  initVideo();
   applyAll();
   initDemo();
   initReveal();

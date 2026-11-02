@@ -248,6 +248,35 @@ a:hover { text-decoration-thickness: 2px; }
 .progress-backers { margin: 2px 0 0; color: var(--text-muted); font-size: .95rem; }
 .progress-updated { margin: 4px 0 0; color: var(--text-muted); font-size: .82rem; }
 
+/* ---------- Vídeo ---------- */
+.video-section { padding-top: clamp(48px, 8vw, 96px); }
+.video-frame { margin-top: 26px; }
+.video-frame video {
+  display: block; max-width: 100%; height: auto; background: #1D2020;
+  border: 2px solid var(--ink); border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--yellow);
+}
+/* Vertical no celular, limitado à altura da tela para caber inteiro */
+.video-frame .video-h { display: none; }
+.video-frame .video-v {
+  width: min(100%, calc(78vh * 9 / 16));
+  width: min(100%, calc(78svh * 9 / 16));
+  aspect-ratio: 9 / 16; margin-inline: auto;
+}
+@media (min-width: 720px) {
+  .video-frame .video-h { display: block; width: 100%; aspect-ratio: 16 / 9; }
+  .video-frame .video-v { display: none; }
+}
+.video-transcript { margin-top: 18px; max-width: 70ch; font-size: .92rem; color: var(--text-muted); }
+.video-transcript summary { cursor: pointer; font-weight: 700; color: var(--ink); }
+.video-transcript p { margin: 8px 0 0; }
+.video-share { margin-top: 32px; max-width: 760px; }
+.video-share h3 { font-size: 1.3rem; }
+.video-share > p { max-width: 62ch; }
+.video-share .share-url { margin-top: -4px; }
+.video-downloads { margin: 14px 0 0; font-size: .92rem; color: var(--text-muted); }
+.video-downloads a { font-weight: 700; color: var(--ink); white-space: nowrap; }
+
 /* ---------- A cena ---------- */
 .scene { background: var(--ink); color: var(--text-on-dark); }
 .scene .kicker { color: var(--yellow); }
@@ -530,7 +559,7 @@ a:hover { text-decoration-thickness: 2px; }
 .pix-code .btn { justify-self: start; }
 .pix-hint { margin: 0; font-size: .88rem; }
 .pix-qr { display: none; }
-.pix-qr svg { width: 168px; height: 168px; }
+.pix-qr svg { display: block; max-width: none; }
 @media (min-width: 720px) {
   .pix-code { grid-template-columns: 1fr auto; }
   .pix-qr { display: block; }
@@ -588,6 +617,46 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .backers-empty { margin: 22px 0 10px; font-size: 1.1rem; font-weight: 600; max-width: 52ch; }
 
+/* ---------- Compartilhe ---------- */
+.share { background: var(--yellow); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+.share .kicker { color: var(--ink); }
+.share .section-lead { color: var(--ink); }
+.share-card {
+  margin-top: 28px; max-width: 760px;
+  background: var(--white); border: 2px solid var(--ink); border-radius: var(--radius);
+  box-shadow: 8px 8px 0 var(--ink); padding: 22px 20px;
+}
+.share-toggle { display: flex; width: 100%; max-width: 360px; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+.share-toggle button { flex: 1; white-space: nowrap; }
+.share-toggle button {
+  font: inherit; font-weight: 700; font-size: .95rem; cursor: pointer;
+  border: 0; background: var(--white); color: var(--ink); padding: 10px 12px; min-height: 44px;
+}
+.share-toggle button + button { border-left: 2px solid var(--ink); }
+.share-toggle button[aria-checked="true"] { background: var(--ink); color: var(--white); }
+.share-label { margin: 0 0 6px; font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); }
+.share-bubble {
+  position: relative; margin: 0 0 18px; padding: 14px 16px;
+  background: #E3F2E4; border: 2px solid var(--ink); border-radius: 14px 14px 14px 4px;
+  font-size: 1.02rem; line-height: 1.5; overflow-wrap: anywhere;
+}
+.share-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.btn-share-wa { background: var(--green); color: var(--ink); border-color: var(--ink); box-shadow: 0 3px 0 var(--ink); }
+.btn-share-wa:hover { background: #6DB878; }
+.btn-share-wa svg { width: 22px; height: 22px; flex: none; }
+.share-more { display: flex; flex-wrap: wrap; gap: 8px; }
+.share-chip {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px;
+  border: 2px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink);
+  font: inherit; font-weight: 700; font-size: .92rem; text-decoration: none; cursor: pointer;
+}
+.share-chip:hover { background: #FFF3CC; }
+.share-feedback { min-height: 1.4em; margin: 10px 0 0; font-weight: 700; font-size: .92rem; }
+.share-feedback:empty { min-height: 0; margin: 0; }
+.share-tip { margin: 12px 0 6px; font-size: .9rem; color: var(--text-muted); }
+.share-url { display: block; font-size: .8rem; color: var(--text-muted); overflow-wrap: anywhere; }
+.pix-share-hint { margin: 12px 0 0; font-size: .95rem; }
+
 /* ---------- Depoimentos ---------- */
 .testimonial-grid { display: grid; gap: 16px; margin-top: 24px; }
 .testimonial { margin: 0; background: var(--white); border: 2px solid var(--ink); border-radius: var(--radius); padding: 22px; }
@@ -600,6 +669,8 @@ a:hover { text-decoration-thickness: 2px; }
   display: grid; place-items: end center; overflow: hidden;
 }
 .author-photo img { width: 74px; margin-bottom: -60px; }
+.author-pair { display: flex; align-items: flex-end; gap: 4px; }
+.author-pair img { width: 64px; }
 .author-photo img[src$=".webp"], .author-photo img[src$=".jpg"] { width: 100%; height: 100%; object-fit: cover; margin: 0; }
 .author p { max-width: 60ch; }
 @media (min-width: 760px) { .author-grid { grid-template-columns: 240px 1fr; gap: 48px; } .author-photo { width: 240px; height: 240px; } }

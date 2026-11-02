@@ -3,11 +3,12 @@
  *  ME · Configuração central do site
  * ============================================================
  *  Este é o ÚNICO arquivo que precisa ser editado para atualizar
- *  a campanha. A campanha é feita por Pix, direto com o criador.
+ *  a campanha. A campanha é feita por Pix.
  *  O site muda sozinho de estado pela data:
  *
- *    antes de dataFim (ou dataFim = null) → "Campanha ativa" (Pix, contagem, barra)
- *    depois de dataFim                    → "Encerrada" (agradecimento, sem Pix)
+ *    dataFim = null (atual)  → campanha sem data para acabar, sempre ativa
+ *    antes de dataFim        → "Campanha ativa" (Pix, contagem regressiva, barra)
+ *    depois de dataFim       → "Encerrada" (agradecimento, sem Pix)
  *
  *  Regras gerais:
  *  - Campo desconhecido fica `null` (ou [] para listas). O site esconde o que é null.
@@ -23,20 +24,22 @@ window.ME_CONFIG = {
   // --- Campanha ---
 
   // Número de cópias da primeira tiragem que a campanha vai produzir.
-  tiragem: 50,
+  tiragem: 100,
 
   // Data e hora de encerramento da campanha (horário de Brasília).
-  // Depois dela, o site agradece e esconde o Pix.
-  // ex.: "2026-12-10T21:00:00-03:00"
-  dataFim: "2026-12-10T21:00:00-03:00",
+  // null = sem data para acabar (sem contagem regressiva).
+  // Se um dia for definida, depois dela o site agradece e esconde o Pix.
+  // ex.: "2027-03-31T21:00:00-03:00"
+  dataFim: null,
 
   // Meta da campanha em reais (número inteiro, sem "R$").
   // ex.: 25000
   metaReais: 25000,
 
-  // Previsão de entrega das cópias, em texto livre.
+  // Previsão de entrega das cópias, em texto livre. O site sempre apresenta
+  // como estimativa, que depende da velocidade para atingir a meta.
   // ex.: "Março de 2027"
-  previsaoEntrega: null,
+  previsaoEntrega: "segundo semestre de 2027",
 
   // --- Atualizados manualmente conforme os Pix chegam ---
 
@@ -58,29 +61,39 @@ window.ME_CONFIG = {
   // ex.: ["Ana Souza", "Bia", "Carlos M."]
   listaApoiadores: [],
 
+  // --- Compartilhamento ---
+
+  // Endereço enviado nas mensagens de compartilhamento e no link do vídeo,
+  // qualquer que seja o endereço em que o site estiver aberto (GitHub Pages,
+  // localhost etc.). Com null, usa o endereço atual da página.
+  urlCompartilhar: "https://playme.app.br/",
+
   // --- Pix ---
 
   // Chave Pix que recebe os apoios. Use null para esconder o Pix do site.
-  // ex.: "51486162-fb79-4f2d-a3cb-6eaef5924947"
-  pixChave: "51486162-fb79-4f2d-a3cb-6eaef5924947",
+  // CNPJ ou CPF podem ser escritos com pontuação: o site mostra assim, mas
+  // copia e gera o código Pix só com os números.
+  // ex.: "50.102.013/0001-40"
+  pixChave: "50.102.013/0001-40",
 
   // Valores sugeridos (em reais) que aparecem como botões.
   // Use [] para mostrar só a chave.
-  // ex.: [50, 100, 150, 200, 250, 500]
-  pixValores: [50, 100, 150, 200, 250, 500],
+  // ex.: [50, 100, 150, 200, 350, 500]
+  pixValores: [50, 100, 150, 200, 350, 500],
 
   // Valor mínimo (em reais) que garante uma cópia do jogo (frete à parte).
   // Abaixo dele, a recompensa é só o nome na lista de apoiadores.
-  // ex.: 500
-  pixValorCopia: 500,
+  // ex.: 350
+  pixValorCopia: 350,
 
-  // Nome do recebedor e cidade do recebedor, exigidos pelo padrão do Pix para
+  // Nome do recebedor (com chave CNPJ, a razão social da empresa) e cidade
+  // do recebedor, exigidos pelo padrão do Pix para
   // gerar o "Pix copia e cola" e o QR Code já com o valor escolhido. Sem
   // acentos é mais seguro; o nome é cortado em 25 letras e a cidade em 15.
   // Enquanto algum dos dois for null, os botões de valor só sugerem a quantia
   // e a pessoa copia a chave e digita o valor no app do banco.
   // ex.: pixNome: "Tiberio Silva", pixCidade: "Ribeirao Preto"
-  pixNome: null,
+  pixNome: "Juliana Bonazone",
   pixCidade: "Ribeirao Preto",
 
   // --- Contato e redes ---
@@ -92,5 +105,5 @@ window.ME_CONFIG = {
   // E-mail de contato. Recebe os comprovantes do Pix, os nomes para a lista
   // de apoiadores e os endereços de entrega.
   // ex.: "contato@playme.app.br"
-  email: "tiberio@gmail.com"
+  email: "euajudei@playme.app.br"
 };
