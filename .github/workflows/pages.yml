@@ -29,7 +29,7 @@ jobs:
 
       - name: O site não pode apontar para docs/
         run: |
-          if grep -rIl --include='*.html' --include='*.js' --include='*.css' 'docs/' index.html 404.html assets/; then
+          if grep -rIl --include='*.html' --include='*.js' --include='*.css' 'docs/' *.html assets/; then
             echo "::error::O site contém referências a docs/."
             exit 1
           fi

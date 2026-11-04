@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Página não encontrada · ME</title>
   <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
   <style>
     html, body { margin: 0; }
     body {
@@ -19,17 +20,19 @@
       background: #FDC125; color: #232B2C; font-weight: 700; text-decoration: none;
     }
     a:focus-visible { outline: 3px solid #4782FF; outline-offset: 3px; }
+    footer { max-width: 640px; margin: 40px auto 0; font-size: .82rem; color: #C3C7C6; }
+    footer a { display: inline; padding: 0; border-radius: 0; background: none; color: #F1F0EC; font-weight: 600; text-decoration: underline; }
   </style>
 </head>
 <body>
   <main>
     <h1>Essa página não existe.</h1>
     <p>Nem a mesa inteira conseguiu adivinhar o que você procurava.</p>
-    <a href="/" id="home">Voltar para o ME</a>
+    <a href="https://playme.app.br/">Voltar para o ME</a>
   </main>
-  <script>
-    // Funciona tanto em tiberiodamaso.github.io/playme/ quanto em playme.app.br/
-    if (location.pathname.indexOf("/playme/") === 0) document.getElementById("home").setAttribute("href", "/playme/");
-  </script>
+  <footer>
+    <p>Campanha e vendas realizadas por Juliana Bonazone, CNPJ 50.102.013/0001-40, Aureo Norberto da Silva, 1040, Ribeirão Preto/SP, CEP 14039-033. Atendimento: <a href="mailto:euajudei@playme.app.br">euajudei@playme.app.br</a>.</p>
+    <p><a href="https://playme.app.br/termos.html">Termos da pré-venda</a> · <a href="https://playme.app.br/privacidade.html">Aviso de privacidade</a></p>
+  </footer>
 </body>
 </html>

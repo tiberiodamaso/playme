@@ -4,4 +4,12 @@
     <loc>https://playme.app.br/</loc>
     <changefreq>weekly</changefreq>
   </url>
+  <url>
+    <loc>https://playme.app.br/termos.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://playme.app.br/privacidade.html</loc>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

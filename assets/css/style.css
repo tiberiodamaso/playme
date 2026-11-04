@@ -503,6 +503,9 @@ a:hover { text-decoration-thickness: 2px; }
 .pix-send-line { margin: 0; display: grid; gap: 8px; justify-items: start; }
 .pix-send-addr { font-size: .9rem; }
 .pix-small { margin: 18px 0 0; font-size: .88rem; }
+.pix-small p { margin: 0 0 8px; }
+.pix-small p:last-child { margin-bottom: 0; }
+.pix-payee { margin: 12px 0 8px; font-weight: 700; font-size: .95rem; }
 .pix-key {
   display: grid; gap: 10px; align-items: center;
   background: var(--white); border: 2px solid var(--ink); border-radius: var(--radius-sm); padding: 16px;
@@ -708,6 +711,19 @@ a:hover { text-decoration-thickness: 2px; }
   .designer-cast img { height: 150px; }
 }
 .thanks { margin: 36px 0 0; font-size: 1.05rem; }
+.roles { margin: 18px 0 0; display: grid; gap: 8px; }
+.roles div { display: grid; gap: 0 12px; }
+.roles dt { font-size: .8rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+.roles dd { margin: 0; font-weight: 700; }
+@media (min-width: 600px) { .roles div { grid-template-columns: 170px 1fr; align-items: baseline; } }
+
+/* ---------- Páginas de termos e privacidade ---------- */
+.legal h1 { font-size: clamp(1.9rem, 6vw, 2.8rem); }
+.legal h2 { font-size: 1.3rem; max-width: none; margin-top: 2em; }
+.legal ul { padding-left: 1.2em; }
+.legal li { margin-bottom: .4em; }
+.legal-updated { color: var(--text-muted); font-size: .9rem; }
+.legal-back { margin-top: 2.5em; }
 
 /* ---------- FAQ ---------- */
 .faq { background: var(--white); }
@@ -743,7 +759,10 @@ a:hover { text-decoration-thickness: 2px; }
 .footer-logo { width: 64px; height: 33px; color: var(--white); margin-bottom: 10px; }
 .footer-links { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }
 .footer-links a { color: var(--text-on-dark); font-weight: 600; }
-.footer-note { margin-top: 18px; font-size: .82rem; }
+.footer-note { margin-top: 10px; font-size: .82rem; }
+.footer-modes { margin: 10px 0 0; font-size: .88rem; }
+.footer-legal { margin-top: 22px; padding-top: 16px; border-top: 1px solid #3E4A4B; font-size: .85rem; }
+.footer-legal a { color: var(--text-on-dark); font-weight: 600; }
 @media (min-width: 720px) { .footer-inner { grid-template-columns: 1fr auto; align-items: start; } }
 
 /* ---------- Animações ---------- */

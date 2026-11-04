@@ -64,7 +64,7 @@
     return {
       primary: hasPix ? { text: "ME apoie", href: "#pix" } : { text: "Como apoiar", href: "#como-apoiar" },
       secondary: { text: "Experimente o jogo", href: "#experimente" },
-      note: copyMin ? "A partir de " + brl(copyMin) + ", uma cópia do jogo é sua." : "Qualquer valor ajuda a levar o ME para a gráfica."
+      note: copyMin ? "Apoio com cópia a partir de " + brl(copyMin) + " (frete à parte) ou apoio livre de qualquer valor abaixo disso." : "Qualquer valor ajuda a levar o ME para a gráfica."
     };
   }
 
@@ -99,15 +99,6 @@
     var dates = $("[data-dates]");
     if (dates && fim) { $("[data-dates-text]").textContent = "Até " + longDateTime(fim); dates.hidden = false; }
 
-    var delivery = $("[data-delivery-text]");
-    if (delivery && isStr(c.previsaoEntrega)) {
-      delivery.textContent = "Previsão de entrega: " + c.previsaoEntrega.trim() + ". É uma estimativa: o prazo depende muito da velocidade com que a meta for atingida. Quem apoiar recebe as atualizações por e-mail.";
-    }
-    $$("[data-delivery-tier]").forEach(function (s) {
-      if (!isStr(c.previsaoEntrega)) return;
-      s.textContent = " Previsão de entrega: " + c.previsaoEntrega.trim() + " (estimativa).";
-      s.hidden = false;
-    });
   }
 
   // ---------- Contato e redes ----------
@@ -211,7 +202,7 @@
     if (emailAddr) {
       var withCopy = copyMin && (!amount || amount >= copyMin);
       var msg = "Olá! Fiz um Pix" + (amount ? " de " + brl(amount) : "") + " para apoiar o ME. O comprovante está em anexo.\n\n" +
-        "Nome e sobrenome para a lista de apoiadores (ou \"não quero aparecer\"): \n" +
+        "Como quero meu nome na lista de apoiadores (nome e sobrenome, primeiro nome + inicial, ou \"não publicar\"): \n" +
         (withCopy ? "\nEndereço completo para o cálculo do frete e o envio da cópia" + (amount ? "" : " (se apoiei com " + brl(copyMin) + " ou mais)") + ":\n" +
           "Nome completo de quem vai receber: \nRua e número: \nComplemento: \nBairro: \nCidade e estado: \nCEP: \n" : "");
       var subject = "Apoio ao ME" + (amount ? " - Pix de " + brl(amount) : " - comprovante do Pix");
@@ -277,8 +268,8 @@
         $$(".pix-amount", grid).forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
         fb.textContent = "";
         $("[data-pix-note-text]", note).replaceChildren(
-          el("strong", null, brl(v) + ": "),
-          document.createTextNode(withCopy ? "uma cópia do ME e seu nome na lista de apoiadores. Frete à parte." : "seu nome na lista de apoiadores deste site."));
+          el("strong", null, brl(v) + (withCopy ? " (apoio com cópia): " : " (apoio livre): ")),
+          document.createTextNode(withCopy ? "1 cópia do jogo e seu nome na lista de apoiadores. Frete à parte." : "seu nome na lista de apoiadores."));
         note.hidden = false;
         fillSend(sendLine, v);
         if (canCode) {

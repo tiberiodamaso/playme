@@ -3,10 +3,11 @@
  *  ME · Configuração central do site
  * ============================================================
  *  Este é o ÚNICO arquivo que precisa ser editado para atualizar
- *  a campanha. A campanha é feita por Pix.
+ *  a campanha. A campanha é uma pré-venda por Pix, feita pelo MEI
+ *  identificado no rodapé do site.
  *  O site muda sozinho de estado pela data:
  *
- *    dataFim = null (atual)  → campanha sem data para acabar, sempre ativa
+ *    dataFim = null          → campanha sem data para acabar, sempre ativa
  *    antes de dataFim        → "Campanha ativa" (Pix, contagem regressiva, barra)
  *    depois de dataFim       → "Encerrada" (agradecimento, sem Pix)
  *
@@ -28,18 +29,15 @@ window.ME_CONFIG = {
 
   // Data e hora de encerramento da campanha (horário de Brasília).
   // null = sem data para acabar (sem contagem regressiva).
-  // Se um dia for definida, depois dela o site agradece e esconde o Pix.
+  // Depois dela o site agradece e esconde o Pix. Se mudar esta data, mude
+  // também "Campanha aberta até 01/05/2027" no index.html e no termos.html.
   // ex.: "2027-03-31T21:00:00-03:00"
-  dataFim: null,
+  dataFim: "2027-05-01T23:59:59-03:00",
 
   // Meta da campanha em reais (número inteiro, sem "R$").
   // ex.: 25000
   metaReais: 25000,
 
-  // Previsão de entrega das cópias, em texto livre. O site sempre apresenta
-  // como estimativa, que depende da velocidade para atingir a meta.
-  // ex.: "Março de 2027"
-  previsaoEntrega: "segundo semestre de 2027",
 
   // --- Atualizados manualmente conforme os Pix chegam ---
 
@@ -92,7 +90,7 @@ window.ME_CONFIG = {
   // acentos é mais seguro; o nome é cortado em 25 letras e a cidade em 15.
   // Enquanto algum dos dois for null, os botões de valor só sugerem a quantia
   // e a pessoa copia a chave e digita o valor no app do banco.
-  // ex.: pixNome: "Tiberio Silva", pixCidade: "Ribeirao Preto"
+  // ex.: pixNome: "Nome Empresarial", pixCidade: "Ribeirao Preto"
   pixNome: "Juliana Bonazone",
   pixCidade: "Ribeirao Preto",
 
